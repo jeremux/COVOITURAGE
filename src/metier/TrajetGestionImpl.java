@@ -4,14 +4,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 import model.Trajet;
+import util.RecupereID;
 
 public class TrajetGestionImpl implements ItrajetGestion {
 
 	
 	public void addTrajet(Trajet t) {
 		Connection connection = SingletonConnection.getConnection();
+		Set<Integer> listIdAvant = RecupereID.getListID("idTrajet", "Trajet");
 		try {
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO Trajet (villeDepart,villeArrivee,date,heure,places,"
 					+ "prix,idConducteur) values (?,?,?,?,?,?,?);");
@@ -29,6 +33,9 @@ public class TrajetGestionImpl implements ItrajetGestion {
 			System.err.println("Erreur insert into table Trajet");
 			e.printStackTrace();
 		}
+		
+		/* On met à jour l'id */
+		t.setId(RecupereID.getNewId("idTrajet", "Trajet", listIdAvant));
 
 	}
 
@@ -66,7 +73,7 @@ public class TrajetGestionImpl implements ItrajetGestion {
 				idRecupere = rs.getInt("idTrajet");
 				if(idRecupere==id)
 				{
-					t.setId(rs.getInt("idProfil"));
+					t.setId(rs.getInt("idTrajet"));
 					t.setDepart(vg.getVilleParID(rs.getInt("villeDepart")));
 					t.setDestination(vg.getVilleParID(rs.getInt("villeArrivee")));
 					t.setDate(rs.getString("date"));
@@ -83,11 +90,6 @@ public class TrajetGestionImpl implements ItrajetGestion {
 		}
 		return t;
 
-	}
-
-	public void toto() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
