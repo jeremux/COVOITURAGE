@@ -13,4 +13,9 @@ public class Conducteur extends Profil {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Conducteur(Profil p) {
+		this(p.getPseudo(), p.getPass(), p.getEmail(), p.getNom(), p.getPrenom(), p.getDateInscription(), p.getDateNaissance(), p.getVille(), p.getPreference());
+		this.setId(p.getId());
+	}
+
 }
