@@ -2,7 +2,7 @@ package model;
 
 public class Paiement {
 	
-	private Profil client;
+	private Passager client;
 	private Trajet trajet;
 	private boolean paiementValide;
 	
@@ -11,18 +11,18 @@ public class Paiement {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Paiement(Profil client, Trajet trajet, boolean paiementValide) {
+	public Paiement(Passager client, Trajet trajet, boolean paiementValide) {
 		super();
 		this.client = client;
 		this.trajet = trajet;
 		this.paiementValide = paiementValide;
 	}
 
-	public Profil getClient() {
+	public Passager getPassager() {
 		return client;
 	}
 
-	public void setClient(Profil client) {
+	public void setPassager(Passager client) {
 		this.client = client;
 	}
 
