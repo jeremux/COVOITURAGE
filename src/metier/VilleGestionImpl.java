@@ -52,6 +52,9 @@ public class VilleGestionImpl implements IVilleGestion {
 			System.err.println("Erreur prepareStatement table Ville");
 			e.printStackTrace();
 		}
+		
+		/* On met à jour l'id */
+		v.setId(getVille(v).getId());
 
 	}
 	
@@ -69,4 +72,38 @@ public class VilleGestionImpl implements IVilleGestion {
 		}
 	}
 
+	@Override
+	public Ville getVille(Ville v) {
+		Ville res = new Ville();
+		
+		Connection connection = SingletonConnection.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Ville where nom=? and codePostal=?;");
+			ps.setString(1, v.getNom());
+			ps.setString(2, v.getCodePostal());
+			ResultSet rs = ps.executeQuery();
+			
+			String cpRecupere;
+			String nomRecupere;
+			while(rs.next())
+			{
+				cpRecupere=rs.getString("codePostal");
+				nomRecupere=rs.getString("nom");
+				if(cpRecupere.equals(v.getCodePostal())&&nomRecupere.equals(v.getNom()))
+				{
+					res.setId(rs.getInt("idVille"));
+					res.setNom(rs.getString("nom"));
+					res.setCodePostal(rs.getString("codePostal"));
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println("Erreur getVille table Ville");
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	
 }
+
+
