@@ -32,6 +32,9 @@ public class ProfilGestionImpl implements IProfilGestion {
 			System.err.println("Erreur insert into table Profil");
 			e.printStackTrace();
 		}
+		
+		/* on met à jour l'id generé */
+		p.setId(getProfilFromPseudo(p.getPseudo()).getId());
 
 	}
 
