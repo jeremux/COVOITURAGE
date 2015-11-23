@@ -62,7 +62,7 @@ CREATE TABLE `Voyageurs` (
 );
 
 CREATE TABLE `Paiement` (
-	`idProfil`	INTEGER,
+	`idPassager`	INTEGER,
 	`idTrajet`	INTEGER,
 	`paiementValide`	INTEGER,
 	PRIMARY KEY(idProfil,idTrajet),
