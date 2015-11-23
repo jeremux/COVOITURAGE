@@ -7,5 +7,5 @@ public interface IPreferenceGestion {
 	public void addPreference(Preference p);
 	public void deletePreference(int id);
 	public Preference getPreference(int idPref);
-	
+	public Preference getPreference(Preference p);
 }

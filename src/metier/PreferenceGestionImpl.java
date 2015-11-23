@@ -39,6 +39,8 @@ public class PreferenceGestionImpl implements IPreferenceGestion {
 				{
 					System.err.println("Problème: modification de plus d'une ligne lors de l'ajout dans la table Preference");
 				}
+				/* on met à jour l'id generé */
+				p.setId(getPreference(p).getId());
 			}
 		} 
 		catch (SQLException e) {
@@ -92,6 +94,40 @@ public class PreferenceGestionImpl implements IPreferenceGestion {
 			e.printStackTrace();
 		}
 		return p;
+	}
+
+
+
+	@Override
+	public Preference getPreference(Preference p) {
+		Preference res = new Preference();
+		
+		Connection connection = SingletonConnection.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Preference where aimeMusique=? and aimeAnimaux=? and fumeur=? and "
+					+ "aimeDiscution=?;");
+			ps.setInt(1, Conversion.toSqliteBool(p.isAimeMusique()));
+			ps.setInt(2, Conversion.toSqliteBool(p.isAimeAnimaux()));
+			ps.setInt(3, Conversion.toSqliteBool(p.isFumeur()));
+			ps.setInt(4, Conversion.toSqliteBool(p.isAimeDiscution()));
+			ResultSet rs = ps.executeQuery();
+			
+			int idp;
+			while(rs.next())
+			{
+					idp = rs.getInt("idPreference");
+					res.setId(idp);
+					res.setAimeAnimaux(Conversion.sqliteToBool(rs.getInt("aimeAnimaux")));
+					res.setAimeDiscution(Conversion.sqliteToBool(rs.getInt("aimeDiscution")));
+					res.setAimeMusique(Conversion.sqliteToBool(rs.getInt("aimeMusique")));
+					res.setFumeur(Conversion.sqliteToBool(rs.getInt("fumeur")));
+				
+			}
+		} catch (SQLException e) {
+			System.err.println("Erreur getPreference table Preference");
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	
