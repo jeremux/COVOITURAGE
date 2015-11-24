@@ -18,7 +18,7 @@ public class Ville implements Serializable{
 
 	public Ville() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.id=-1;
 	}
 
 	public int getId() {

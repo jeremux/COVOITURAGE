@@ -31,6 +31,7 @@ public class Profil {
 
 	public Profil() {
 		super();
+		this.id = -1;
 		// TODO Auto-generated constructor stub
 	}
 
