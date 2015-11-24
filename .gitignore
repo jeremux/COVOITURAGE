@@ -5,3 +5,6 @@
 .settings*
 .project
 src/test/*
+
+WebContent/WEB-INF/db/insertMessage.sql
+/scripts/
