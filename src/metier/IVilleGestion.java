@@ -6,6 +6,7 @@ public interface IVilleGestion {
 	
 	public Ville getVilleParID(int id);
 	public Ville getVille(Ville v);
+	public Ville getVille(String cp);
 	public void addVille(Ville v);
 	public void deleteVille(String cp);
 }
