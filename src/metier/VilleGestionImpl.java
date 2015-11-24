@@ -41,7 +41,12 @@ public class VilleGestionImpl implements IVilleGestion {
 	@Override
 	public void addVille(Ville v) {
 		Connection connection = SingletonConnection.getConnection();
-		try {
+		Ville tmp = getVille(v.getCodePostal());
+		/* si id = -1 => inexistant => on insert */ 
+		if(tmp.getId()==-1)
+			
+		{try {
+			
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO Ville (nom,codePostal) values (?,?);");
 			ps.setString(1,v.getNom());
 			ps.setString(2, v.getCodePostal());
@@ -55,7 +60,12 @@ public class VilleGestionImpl implements IVilleGestion {
 		
 		/* On met à jour l'id */
 		v.setId(getVille(v).getId());
-
+		}
+		else
+		{
+			/* on met a jour l'id par rapport à l'existant */
+			v.setId(tmp.getId());
+		}
 	}
 	
 	public void deleteVille(String cp){
@@ -101,6 +111,35 @@ public class VilleGestionImpl implements IVilleGestion {
 			e.printStackTrace();
 		}
 		return res;
+	}
+
+	@Override
+	public Ville getVille(String cp) {
+		Ville v = new Ville();
+		
+		Connection connection = SingletonConnection.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Ville where codePostal=?");
+			ps.setString(1, cp);
+			ResultSet rs = ps.executeQuery();
+			
+			String cpRecupere="";
+			while(rs.next())
+			{
+				cpRecupere = rs.getString("codePostal");
+				if(cp.equals(cpRecupere))
+				{
+					v.setId(rs.getInt("idVille"));
+					v.setNom(rs.getString("nom"));
+					v.setCodePostal(cp);
+					System.out.println(rs.getInt("idVille")+" = "+rs.getString("nom"));
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println("Erreur getVille table Ville");
+			e.printStackTrace();
+		}
+		return v;
 	}
 
 	

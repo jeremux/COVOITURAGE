@@ -13,7 +13,9 @@ public class ProfilGestionImpl implements IProfilGestion {
 	@Override
 	public void addProfil(Profil p) {
 		Connection connection = SingletonConnection.getConnection();
-		try {
+		Profil tmp = getProfilFromEmail(p.getEmail());
+		if(tmp.getId()==-1)
+		{try {
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO Profil (pseudo,pass,email,dateInscription,dateNaissance,"
 					+ "nom,prenom,ville,preference) values (?,?,?,?,?,?,?,?,?);");
 			ps.setString(1,p.getPseudo());
@@ -35,6 +37,11 @@ public class ProfilGestionImpl implements IProfilGestion {
 		
 		/* on met à jour l'id generé */
 		p.setId(getProfilFromPseudo(p.getPseudo()).getId());
+		}
+		else
+		{
+			p.setId(tmp.getId());
+		}
 
 	}
 
