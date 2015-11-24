@@ -42,6 +42,10 @@ public class PreferenceGestionImpl implements IPreferenceGestion {
 				/* on met à jour l'id generé */
 				p.setId(getPreference(p).getId());
 			}
+			else
+			{
+				p.setId(getPreference(p).getId());
+			}
 		} 
 		catch (SQLException e) {
 				System.err.println("Erreur add table Preference");
