@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-import metier.SingletonConnection;
+import connexion.SingletonConnection;
 
 public class RecupereID {
 	
