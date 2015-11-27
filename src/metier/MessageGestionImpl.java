@@ -1,6 +1,5 @@
 package metier;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +7,6 @@ import java.util.Set;
 
 import dao.DAO;
 import model.Message;
-import util.Conversion;
 import util.RecupereID;
 
 public class MessageGestionImpl extends DAO<Message> {
@@ -57,10 +55,9 @@ public class MessageGestionImpl extends DAO<Message> {
 			ps.setInt(3, m.getDestinataire().getId());
 			ps.setInt(4,m.getExpediteur().getId());
 			
-			//TODO: faire des find puis get ID ;)
 			ps.setInt(5, m.getTrajet().getId());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println("Erreur insert into table Message");
@@ -89,7 +86,7 @@ public class MessageGestionImpl extends DAO<Message> {
 			ps.setInt(5, m.getTrajet().getId());
 			ps.setInt(6, m.getId());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 			res = this.find(m.getId());
 			
@@ -107,7 +104,7 @@ public class MessageGestionImpl extends DAO<Message> {
 			PreparedStatement ps = this.connection.prepareStatement("delete from Message where idMessage=?");
 			ps.setInt(1,m.getId());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println("Erreur prepareStatement table Message");

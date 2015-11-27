@@ -7,11 +7,8 @@ import java.sql.SQLException;
 
 import connexion.SingletonConnection;
 import dao.DAO;
-import model.Conducteur;
-import model.Passager;
-import model.Preference;
 import model.Profil;
-import util.Conversion;
+
 
 public class ProfilGestionImpl extends DAO<Profil> {
 
@@ -156,7 +153,7 @@ public class ProfilGestionImpl extends DAO<Profil> {
 			ps.setInt(8, p.getVille().getId());
 			ps.setInt(9, p.getPreference().getId());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println("Erreur insert into table Profil");
@@ -202,7 +199,7 @@ public class ProfilGestionImpl extends DAO<Profil> {
 			ps.setInt(10, p.getId());
 		
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 			res = this.find(p.getId());
 			
@@ -220,7 +217,7 @@ public class ProfilGestionImpl extends DAO<Profil> {
 			PreparedStatement ps = connection.prepareStatement("delete from Profil where idProfil=?");
 			ps.setInt(1,p.getId());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println("Erreur delete from table Profil");

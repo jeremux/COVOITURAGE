@@ -20,7 +20,7 @@ public class Clean {
 		{
 			try {
 				PreparedStatement ps = connection.prepareStatement("delete from "+table);
-				int nbModif = ps.executeUpdate();
+				ps.executeUpdate();
 				
 			} catch (SQLException e) {
 				System.err.println("Erreur insert into table "+table);

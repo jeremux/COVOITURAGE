@@ -7,9 +7,7 @@ import java.sql.SQLException;
 
 import connexion.SingletonConnection;
 import dao.DAO;
-import model.Message;
 import model.Preference;
-import model.Ville;
 import util.Conversion;
 
 public class PreferenceGestionImpl extends DAO<Preference> {
@@ -143,7 +141,7 @@ public class PreferenceGestionImpl extends DAO<Preference> {
 			ps.setInt(4, Conversion.toSqliteBool(p.isAimeDiscution()));
 			ps.setInt(5, p.getId());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 			res = this.find(p.getId());
 			
@@ -163,7 +161,7 @@ public class PreferenceGestionImpl extends DAO<Preference> {
 			PreparedStatement ps = connection.prepareStatement("delete from Ville where idPreference=?");
 			ps.setInt(1,p.getId());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println("Erreur delete table Preference");

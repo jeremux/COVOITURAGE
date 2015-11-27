@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import dao.DAO;
 import model.Passager;
 import model.Trajet;
-import model.Ville;
 import model.Voyageurs;
 
 public class VoyageursGestionImpl extends DAO<Voyageurs> {

@@ -4,13 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.Set;
 
 import connexion.SingletonConnection;
 import dao.DAO;
 import model.Conducteur;
-import model.Profil;
 import model.Trajet;
 import util.RecupereID;
 
@@ -67,7 +65,7 @@ public class TrajetGestionImpl extends DAO<Trajet> {
 			ps.setDouble(6, t.getPrix());
 			ps.setInt(7,t.getConducteur().getId());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println("Erreur insert into table Trajet");
@@ -105,7 +103,7 @@ public class TrajetGestionImpl extends DAO<Trajet> {
 			ps.setInt(8, t.getId());
 		
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 			res = this.find(t.getId());
 			
@@ -124,7 +122,7 @@ public class TrajetGestionImpl extends DAO<Trajet> {
 			PreparedStatement ps = connection.prepareStatement("delete from Trajet where idTrajet=?");
 			ps.setInt(1,t.getId());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println("Erreur delete from table Trajet");

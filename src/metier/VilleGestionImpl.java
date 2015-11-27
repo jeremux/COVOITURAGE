@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import connexion.SingletonConnection;
 import dao.DAO;
-import model.Trajet;
 import model.Ville;
 
 public class VilleGestionImpl extends DAO<Ville> {
@@ -110,7 +109,7 @@ public class VilleGestionImpl extends DAO<Ville> {
 			ps.setString(1,v.getNom());
 			ps.setString(2, v.getCodePostal());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println("Erreur prepareStatement table Ville");
@@ -143,7 +142,7 @@ public class VilleGestionImpl extends DAO<Ville> {
 			ps.setInt(3, v.getId());
 		
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 			res = this.find(v.getId());
 			
@@ -162,7 +161,7 @@ public class VilleGestionImpl extends DAO<Ville> {
 			PreparedStatement ps = connection.prepareStatement("delete from Ville where codePostal=?");
 			ps.setString(1,v.getCodePostal());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println("Erreur prepareStatement table Ville");
