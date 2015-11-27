@@ -5,69 +5,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import connexion.SingletonConnection;
+import dao.DAO;
 import model.Conducteur;
+import model.Passager;
+import model.Preference;
 import model.Profil;
+import util.Conversion;
 
-public class ProfilGestionImpl implements IProfilGestion {
+public class ProfilGestionImpl extends DAO<Profil> {
 
-	@Override
-	public void addProfil(Profil p) {
-		Connection connection = SingletonConnection.getConnection();
-		Profil tmp = getProfilFromEmail(p.getEmail());
-		if(tmp.getId()==-1)
-		{try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO Profil (pseudo,pass,email,dateInscription,dateNaissance,"
-					+ "nom,prenom,ville,preference) values (?,?,?,?,?,?,?,?,?);");
-			ps.setString(1,p.getPseudo());
-			ps.setString(2, p.getPass());
-			ps.setString(3, p.getEmail());
-			ps.setString(4, p.getDateInscription());
-			ps.setString(5, p.getDateNaissance());
-			ps.setString(6, p.getNom());
-			ps.setString(7, p.getPrenom());
-			ps.setInt(8, p.getVille().getId());
-			ps.setInt(9, p.getPreference().getId());
-			
-			int nbModif = ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			System.err.println("Erreur insert into table Profil");
-			e.printStackTrace();
-		}
-		
-		/* on met à jour l'id generé */
-		p.setId(getProfilFromPseudo(p.getPseudo()).getId());
-		}
-		else
-		{
-			p.setId(tmp.getId());
-		}
-
-	}
-
-	@Override
-	public void deleteProfil(Profil p) {
-		Connection connection = SingletonConnection.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("delete from Profil where idProfil=?");
-			ps.setInt(1,p.getId());
-			
-			int nbModif = ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			System.err.println("Erreur delete from table Profil");
-			e.printStackTrace();
-		}
-
-	}
-
-	@Override
-	public Profil getProfilFromPseudo(String pseudo) {
+	public Profil findByPseudo(String pseudo) {
 		Profil p = new Profil();
 		VilleGestionImpl vg = new VilleGestionImpl();
 		PreferenceGestionImpl pg =  new PreferenceGestionImpl();
 		
-		Connection connection = SingletonConnection.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("select * from Profil where pseudo=?");
 			ps.setString(1,pseudo);
@@ -90,8 +42,8 @@ public class ProfilGestionImpl implements IProfilGestion {
 					int idVille = rs.getInt("ville");
 					int idPref = rs.getInt("preference");
 					
-					p.setVille(vg.getVilleParID(idVille));
-					p.setPreference(pg.getPreference(idPref));
+					p.setVille(vg.find(idVille));
+					p.setPreference(pg.find(idPref));
 				
 				}
 			}
@@ -102,13 +54,12 @@ public class ProfilGestionImpl implements IProfilGestion {
 		return p;
 	}
 
-	@Override
-	public Profil getProfilFromEmail(String email) {
+
+	public Profil findByEmail(String email) {
 		Profil p = new Profil();
 		VilleGestionImpl vg = new VilleGestionImpl();
 		PreferenceGestionImpl pg =  new PreferenceGestionImpl();
 		
-		Connection connection = SingletonConnection.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("select * from Profil where email=?");
 			ps.setString(1,email);
@@ -131,8 +82,8 @@ public class ProfilGestionImpl implements IProfilGestion {
 					int idVille = rs.getInt("ville");
 					int idPref = rs.getInt("preference");
 					
-					p.setVille(vg.getVilleParID(idVille));
-					p.setPreference(pg.getPreference(idPref));
+					p.setVille(vg.find(idVille));
+					p.setPreference(pg.find(idPref));
 				
 				}
 			}
@@ -144,23 +95,10 @@ public class ProfilGestionImpl implements IProfilGestion {
 		
 	}
 
-	public void deleteProfilFromPseudo(String pseudo) {
-		Connection connection = SingletonConnection.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("delete from Profil where pseudo=?");
-			ps.setString(1,pseudo);
-			
-			int nbModif = ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			System.err.println("Erreur delete from table Profil");
-			e.printStackTrace();
-		}
-		
-	}
 
-	public Conducteur getProfilFromID(int id) {
-			Conducteur p = new Conducteur();
+
+	public Profil find(int id) {
+			Profil p = new Profil();
 			VilleGestionImpl vg = new VilleGestionImpl();
 			PreferenceGestionImpl pg =  new PreferenceGestionImpl();
 			
@@ -187,8 +125,8 @@ public class ProfilGestionImpl implements IProfilGestion {
 						int idVille = rs.getInt("ville");
 						int idPref = rs.getInt("preference");
 						
-						p.setVille(vg.getVilleParID(idVille));
-						p.setPreference(pg.getPreference(idPref));
+						p.setVille(vg.find(idVille));
+						p.setPreference(pg.find(idPref));
 					
 					}
 				}
@@ -197,6 +135,98 @@ public class ProfilGestionImpl implements IProfilGestion {
 				e.printStackTrace();
 			}
 			return p;
+	}
+
+	
+
+	@Override
+	public Profil create(Profil p) {
+		Profil tmp = findByEmail(p.getEmail());
+		if(tmp.getId()==-1)
+		{try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Profil (pseudo,pass,email,dateInscription,dateNaissance,"
+					+ "nom,prenom,ville,preference) values (?,?,?,?,?,?,?,?,?);");
+			ps.setString(1,p.getPseudo());
+			ps.setString(2, p.getPass());
+			ps.setString(3, p.getEmail());
+			ps.setString(4, p.getDateInscription());
+			ps.setString(5, p.getDateNaissance());
+			ps.setString(6, p.getNom());
+			ps.setString(7, p.getPrenom());
+			ps.setInt(8, p.getVille().getId());
+			ps.setInt(9, p.getPreference().getId());
+			
+			int nbModif = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur insert into table Profil");
+			e.printStackTrace();
+		}
+		
+		/* on met à jour l'id generé */
+		p.setId(findByPseudo(p.getPseudo()).getId());
+		}
+		else
+		{
+			p.setId(tmp.getId());
+		}
+		
+		return p;
+	}
+
+	@Override
+	public Profil update(Profil p) {
+		Profil res= new Profil();
+		try {
+			PreparedStatement ps = this.connection.prepareStatement("update Profil set "
+					+ "pseudo=?,"
+					+ "pass= ?,"
+					+ "email= ?,"
+					+ "dateInscription= ?,"
+					+ "dateNaissance=?,"
+					+ "nom=?,"
+					+ "prenom=?,"
+					+ "ville=?,"
+					+ "preference=?"
+					+ "where idProfil=?");
+	
+			ps.setString(1,p.getPseudo());
+			ps.setString(2, p.getPass());
+			ps.setString(3, p.getEmail());
+			ps.setString(4, p.getDateInscription());
+			ps.setString(5, p.getDateNaissance());
+			ps.setString(6, p.getNom());
+			ps.setString(7, p.getPrenom());
+			ps.setInt(8, p.getVille().getId());
+			ps.setInt(9, p.getPreference().getId());
+			ps.setInt(10, p.getId());
+		
+			
+			int nbModif = ps.executeUpdate();
+			
+			res = this.find(p.getId());
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur insert into table Message");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public void delete(Profil p) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("delete from Profil where idProfil=?");
+			ps.setInt(1,p.getId());
+			
+			int nbModif = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur delete from table Profil");
+			e.printStackTrace();
+		}
+		
 	}
 	
 	

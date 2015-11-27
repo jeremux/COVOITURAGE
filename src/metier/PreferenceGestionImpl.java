@@ -5,15 +5,83 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import connexion.SingletonConnection;
+import dao.DAO;
+import model.Message;
 import model.Preference;
 import model.Ville;
 import util.Conversion;
 
-public class PreferenceGestionImpl implements IPreferenceGestion {
+public class PreferenceGestionImpl extends DAO<Preference> {
+
+	public Preference find(int idPref) {
+		Preference p = new Preference();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Preference where idPreference=?");
+			ps.setInt(1, idPref);
+			ResultSet rs = ps.executeQuery();
+			
+			int idp;
+			while(rs.next())
+			{
+				idp = rs.getInt("idPreference");
+				if(idp==idPref)
+				{
+					p.setId(idp);
+					p.setAimeAnimaux(Conversion.sqliteToBool(rs.getInt("aimeAnimaux")));
+					p.setAimeDiscution(Conversion.sqliteToBool(rs.getInt("aimeDiscution")));
+					p.setAimeMusique(Conversion.sqliteToBool(rs.getInt("aimeMusique")));
+					p.setFumeur(Conversion.sqliteToBool(rs.getInt("fumeur")));
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println("Erreur getPreference table Preference");
+			e.printStackTrace();
+		}
+		return p;
+	}
+
+
+
+	public Preference getPreference(Preference p) {
+		Preference res = new Preference();
+		
+		Connection connection = SingletonConnection.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Preference where aimeMusique=? and aimeAnimaux=? and fumeur=? and "
+					+ "aimeDiscution=?;");
+			ps.setInt(1, Conversion.toSqliteBool(p.isAimeMusique()));
+			ps.setInt(2, Conversion.toSqliteBool(p.isAimeAnimaux()));
+			ps.setInt(3, Conversion.toSqliteBool(p.isFumeur()));
+			ps.setInt(4, Conversion.toSqliteBool(p.isAimeDiscution()));
+			ResultSet rs = ps.executeQuery();
+			
+			int idp;
+			while(rs.next())
+			{
+					idp = rs.getInt("idPreference");
+					res.setId(idp);
+					res.setAimeAnimaux(Conversion.sqliteToBool(rs.getInt("aimeAnimaux")));
+					res.setAimeDiscution(Conversion.sqliteToBool(rs.getInt("aimeDiscution")));
+					res.setAimeMusique(Conversion.sqliteToBool(rs.getInt("aimeMusique")));
+					res.setFumeur(Conversion.sqliteToBool(rs.getInt("fumeur")));
+				
+			}
+		} catch (SQLException e) {
+			System.err.println("Erreur getPreference table Preference");
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+
+
+
+
+
 
 	@Override
-	public void addPreference(Preference p) {
-		Connection connection = SingletonConnection.getConnection();
+	public Preference create(Preference p) {
 		try {
 			PreparedStatement ps = connection.prepareStatement("select count(*) from Preference where aimeAnimaux=? and aimeMusique=? "
 					+ "and aimeDiscution=? and fumeur=?");
@@ -51,16 +119,49 @@ public class PreferenceGestionImpl implements IPreferenceGestion {
 				System.err.println("Erreur add table Preference");
 				e.printStackTrace();
 			}
+		
+		return p;
 	}
 
-	
+
 
 	@Override
-	public void deletePreference(int id) {
-		Connection connection = SingletonConnection.getConnection();
+	public Preference update(Preference p) {
+		Preference res= new Preference();
+		try {
+			PreparedStatement ps = this.connection.prepareStatement("update Preference set "
+					+ "aimeMusique=?,"
+					+ "aimeAnimaux= ?,"
+					+ "fumeur= ?,"
+					+ "aimeDiscution= ?,"
+					+ "where idPreference=?;");
+	
+			
+			ps.setInt(1, Conversion.toSqliteBool(p.isAimeMusique()));
+			ps.setInt(2, Conversion.toSqliteBool(p.isAimeAnimaux()));
+			ps.setInt(3, Conversion.toSqliteBool(p.isFumeur()));
+			ps.setInt(4, Conversion.toSqliteBool(p.isAimeDiscution()));
+			ps.setInt(5, p.getId());
+			
+			int nbModif = ps.executeUpdate();
+			
+			res = this.find(p.getId());
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur insert into table Message");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+
+
+	@Override
+	public void delete(Preference p) {
 		try {
 			PreparedStatement ps = connection.prepareStatement("delete from Ville where idPreference=?");
-			ps.setInt(1,id);
+			ps.setInt(1,p.getId());
 			
 			int nbModif = ps.executeUpdate();
 			
@@ -69,69 +170,6 @@ public class PreferenceGestionImpl implements IPreferenceGestion {
 			e.printStackTrace();
 		}
 		
-	}
-
-	public Preference getPreference(int idPref) {
-		Preference p = new Preference();
-		
-		Connection connection = SingletonConnection.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from Preference where idPreference=?");
-			ps.setInt(1, idPref);
-			ResultSet rs = ps.executeQuery();
-			
-			int idp;
-			while(rs.next())
-			{
-				idp = rs.getInt("idPreference");
-				if(idp==idPref)
-				{
-					p.setId(idp);
-					p.setAimeAnimaux(Conversion.sqliteToBool(rs.getInt("aimeAnimaux")));
-					p.setAimeDiscution(Conversion.sqliteToBool(rs.getInt("aimeDiscution")));
-					p.setAimeMusique(Conversion.sqliteToBool(rs.getInt("aimeMusique")));
-					p.setFumeur(Conversion.sqliteToBool(rs.getInt("fumeur")));
-				}
-			}
-		} catch (SQLException e) {
-			System.err.println("Erreur getPreference table Preference");
-			e.printStackTrace();
-		}
-		return p;
-	}
-
-
-
-	@Override
-	public Preference getPreference(Preference p) {
-		Preference res = new Preference();
-		
-		Connection connection = SingletonConnection.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from Preference where aimeMusique=? and aimeAnimaux=? and fumeur=? and "
-					+ "aimeDiscution=?;");
-			ps.setInt(1, Conversion.toSqliteBool(p.isAimeMusique()));
-			ps.setInt(2, Conversion.toSqliteBool(p.isAimeAnimaux()));
-			ps.setInt(3, Conversion.toSqliteBool(p.isFumeur()));
-			ps.setInt(4, Conversion.toSqliteBool(p.isAimeDiscution()));
-			ResultSet rs = ps.executeQuery();
-			
-			int idp;
-			while(rs.next())
-			{
-					idp = rs.getInt("idPreference");
-					res.setId(idp);
-					res.setAimeAnimaux(Conversion.sqliteToBool(rs.getInt("aimeAnimaux")));
-					res.setAimeDiscution(Conversion.sqliteToBool(rs.getInt("aimeDiscution")));
-					res.setAimeMusique(Conversion.sqliteToBool(rs.getInt("aimeMusique")));
-					res.setFumeur(Conversion.sqliteToBool(rs.getInt("fumeur")));
-				
-			}
-		} catch (SQLException e) {
-			System.err.println("Erreur getPreference table Preference");
-			e.printStackTrace();
-		}
-		return res;
 	}
 
 	

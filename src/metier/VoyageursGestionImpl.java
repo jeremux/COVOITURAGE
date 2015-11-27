@@ -1,41 +1,44 @@
 package metier;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import dao.DAO;
 import model.Passager;
 import model.Trajet;
+import model.Ville;
 import model.Voyageurs;
 
-public class VoyageursGestionImpl implements IVoyageursGestion {
+public class VoyageursGestionImpl extends DAO<Voyageurs> {
 
 	@Override
-	public void add(Voyageurs v) {
-		Connection connection = SingletonConnection.getConnection();
+	public Voyageurs create(Voyageurs v) {
+
 		try {
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO Voyageurs (idPassager,idTrajet) values (?,?);");
 			ps.setInt(1, v.getPassager().getId());
 			ps.setInt(2, v.getTrajet().getId());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println("Erreur insert into table Voyageurs");
 			e.printStackTrace();
 		}
+		
+		return v;
 
 	}
 
 	@Override
 	public void delete(Voyageurs v) {
-		Connection connection = SingletonConnection.getConnection();
+
 		try {
 			PreparedStatement ps = connection.prepareStatement("delete from Voyageurs where idPassager=? and idTrajet=?");
 			ps.setInt(1,v.getPassager().getId());
 			ps.setInt(2, v.getTrajet().getId());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println("Erreur delete from table Voyageurs");
@@ -43,21 +46,30 @@ public class VoyageursGestionImpl implements IVoyageursGestion {
 		}
 	}
 
-	@Override
 	public void delete(Passager p, Trajet t) {
-		Connection connection = SingletonConnection.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("delete from Voyageurs where idPassager=? and idTrajet=?");
 			ps.setInt(1,p.getId());
 			ps.setInt(2, t.getId());
 			
-			int nbModif = ps.executeUpdate();
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println("Erreur delete from table Voyageurs");
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public Voyageurs find(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Voyageurs update(Voyageurs v) {
+		return null;
 	}
 
 }
