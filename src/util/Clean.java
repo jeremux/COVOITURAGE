@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-import metier.SingletonConnection;
+import connexion.SingletonConnection;
 
 public class Clean {
 	
