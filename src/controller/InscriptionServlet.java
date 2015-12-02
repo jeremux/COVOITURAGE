@@ -8,13 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Profil;
+import web.InscriptionForm;
+
 /**
  * Servlet implementation class InscriptionServlet
  */
 @WebServlet(name = "inscription", urlPatterns = { "/inscription" })
 public class InscriptionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+      
+	public static final String ATT_USER = "utilisateur";
+    public static final String ATT_FORM = "form";
+    public static final String VUE = "/inscription.jsp";
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -23,34 +30,28 @@ public class InscriptionServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see Servlet#init(ServletConfig)
-	 */
-	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * @see Servlet#destroy()
-	 */
-	public void destroy() {
-		// TODO Auto-generated method stub
-	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		/* Affichage de la page d'inscription */
+        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		InscriptionForm form = new InscriptionForm();
+		Profil utilisateur = form.inscrireUtilisateur(request);
+		
+		
+		
+		request.setAttribute( ATT_FORM, form );
+        request.setAttribute( ATT_USER, utilisateur );
+		
+        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
 
 }
