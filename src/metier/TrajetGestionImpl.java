@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import connexion.SingletonConnection;
 import dao.DAO;
 import model.Conducteur;
 import model.Trajet;
+import model.Ville;
 import util.RecupereID;
 
 public class TrajetGestionImpl extends DAO<Trajet> {
@@ -129,6 +132,124 @@ public class TrajetGestionImpl extends DAO<Trajet> {
 			e.printStackTrace();
 		}
 		
+	}
+
+
+	public List<Trajet> find(Ville depart, Ville arrivee) {
+		List<Trajet> res =  new ArrayList<Trajet>();
+		
+		Trajet t = new Trajet();
+		VilleGestionImpl vg = new VilleGestionImpl();
+		ProfilGestionImpl pg = new ProfilGestionImpl();
+		Conducteur c;
+		
+		Connection connection = SingletonConnection.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Trajet where villeDepart=? and villeArrivee=?;");
+			ps.setInt(1,depart.getId());
+			ps.setInt(2, arrivee.getId());
+			ResultSet rs = ps.executeQuery();
+	
+			while(rs.next())
+			{		
+				t.setId(rs.getInt("idTrajet"));
+				t.setDepart(vg.find(rs.getInt("villeDepart")));
+				t.setDestination(vg.find(rs.getInt("villeArrivee")));
+				t.setDate(rs.getString("date"));
+				t.setHeure(rs.getString("heure"));
+				t.setPlaces(rs.getInt("places"));
+				t.setPrix(rs.getDouble("prix"));
+				c = new Conducteur(pg.find(rs.getInt("idConducteur")));
+				t.setConducteur(c);
+				
+				res.add(t);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur select table Trajet");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+
+	public List<Trajet> find(Ville depart, Ville arrivee, String date) {
+List<Trajet> res =  new ArrayList<Trajet>();
+		
+		Trajet t = new Trajet();
+		VilleGestionImpl vg = new VilleGestionImpl();
+		ProfilGestionImpl pg = new ProfilGestionImpl();
+		Conducteur c;
+		
+		Connection connection = SingletonConnection.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Trajet where villeDepart=? and villeArrivee=? and date=?;");
+			ps.setInt(1,depart.getId());
+			ps.setInt(2, arrivee.getId());
+			ps.setString(3, date);
+			ResultSet rs = ps.executeQuery();
+	
+			while(rs.next())
+			{		
+				t.setId(rs.getInt("idTrajet"));
+				t.setDepart(vg.find(rs.getInt("villeDepart")));
+				t.setDestination(vg.find(rs.getInt("villeArrivee")));
+				t.setDate(rs.getString("date"));
+				t.setHeure(rs.getString("heure"));
+				t.setPlaces(rs.getInt("places"));
+				t.setPrix(rs.getDouble("prix"));
+				c = new Conducteur(pg.find(rs.getInt("idConducteur")));
+				t.setConducteur(c);
+				
+				res.add(t);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur select table Trajet");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+
+	public List<Trajet> findAll() {
+		List<Trajet> res =  new ArrayList<Trajet>();
+		
+		Trajet t = new Trajet();
+		VilleGestionImpl vg = new VilleGestionImpl();
+		ProfilGestionImpl pg = new ProfilGestionImpl();
+		Conducteur c;
+		
+		Connection connection = SingletonConnection.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Trajet;");
+			ResultSet rs = ps.executeQuery();
+	
+			while(rs.next())
+			{	
+				t = new Trajet();
+				t.setId(rs.getInt("idTrajet"));
+				t.setDepart(vg.find(rs.getInt("villeDepart")));
+				t.setDestination(vg.find(rs.getInt("villeArrivee")));
+				t.setDate(rs.getString("date"));
+				t.setHeure(rs.getString("heure"));
+				t.setPlaces(rs.getInt("places"));
+				t.setPrix(rs.getDouble("prix"));
+				c = new Conducteur(pg.find(rs.getInt("idConducteur")));
+				t.setConducteur(c);
+				
+				
+				res.add(t);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur select table Trajet");
+			e.printStackTrace();
+		}
+		
+		return res;
 	}
 
 }
