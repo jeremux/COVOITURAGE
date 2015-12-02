@@ -69,7 +69,7 @@ public class ProfilGestionImpl extends DAO<Profil> {
 				if(emailRecupere.equals(email))
 				{
 					p.setId(rs.getInt("idProfil"));
-					p.setPseudo(email);
+					p.setEmail(email);
 					p.setPass(rs.getString("pass"));
 					p.setDateInscription(rs.getString("dateInscription"));
 					p.setDateNaissance(rs.getString("dateNaissance"));
