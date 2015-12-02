@@ -92,5 +92,18 @@ public class Trajet {
 		this.conducteur = conducteur;
 	}
 	
+	public String toString()
+	{
+		String res = "***************************************";
+		res += "\nVille depart = "+this.getDepart().getNom();
+		res += "\n ville d'arrivee = "+this.getDestination().getNom();
+		res += "\n date = "+this.getDate();
+		res += "\n heure ="+this.getHeure();
+		res += "\n places ="+this.getPlaces();
+		res += "\n prix =" +this.getPrix();
+		res += "\n conducteur ="+this.getConducteur().getPrenom();
+		
+		return res;
+	}
 	
 }
