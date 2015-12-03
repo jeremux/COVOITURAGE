@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import connexion.SingletonConnection;
 import dao.DAO;
+import model.Conducteur;
+import model.Trajet;
 import model.Ville;
 
 public class VilleGestionImpl extends DAO<Ville> {
@@ -45,6 +49,10 @@ public class VilleGestionImpl extends DAO<Ville> {
 	public Ville findByCP(String cp) {
 		Ville v = new Ville();
 		
+		if(cp == null || cp.equals("") )
+			return v;
+		
+		
 		Connection connection = SingletonConnection.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("select * from Ville where codePostal=?");
@@ -60,7 +68,7 @@ public class VilleGestionImpl extends DAO<Ville> {
 					v.setId(rs.getInt("idVille"));
 					v.setNom(rs.getString("nom"));
 					v.setCodePostal(cp);
-					System.out.println(rs.getInt("idVille")+" = "+rs.getString("nom"));
+					//System.out.println(rs.getInt("idVille")+" = "+rs.getString("nom"));
 				}
 			}
 		} catch (SQLException e) {
@@ -168,6 +176,36 @@ public class VilleGestionImpl extends DAO<Ville> {
 			e.printStackTrace();
 		}
 		
+	}
+
+
+	public List<Ville> findAll() {
+		List<Ville> res =  new ArrayList<Ville>();
+		
+		Ville v = new Ville();
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Ville;");
+			ResultSet rs = ps.executeQuery();
+	
+			while(rs.next())
+			{	
+				v = new Ville();
+				v.setId(rs.getInt("idVille"));
+				v.setNom(rs.getString("nom"));
+				v.setCodePostal(rs.getString("codePostal"));
+			
+				
+				
+				res.add(v);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur select table Trajet");
+			e.printStackTrace();
+		}
+		
+		return res;
 	}
 
 	

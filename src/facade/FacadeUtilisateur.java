@@ -38,12 +38,34 @@ public class FacadeUtilisateur implements IOperations {
 
 	@Override
 	public List<Trajet> rechercherTrajet(Ville arrivee, Ville dep, String date) {
-		return trajetDAO.find(dep,arrivee,date);
+		if(dep.getId() == -1 && (date == null  || date.equals("") ))
+		{
+			return trajetDAO.find(arrivee);
+		}
+		else if (dep.getId()==-1)
+		{
+			return trajetDAO.find(arrivee,date);
+		}
+		else 
+		{
+			return trajetDAO.find(dep,arrivee,date);
+		}
 	}
 
 	@Override
 	public List<Trajet> getLesTrajet() {
 		return trajetDAO.findAll();
+	}
+
+	@Override
+	public List<Trajet> rechercherTrajet(Ville arrivee) {
+		return trajetDAO.find(arrivee);
+	}
+
+	@Override
+	public List<Trajet> rechercherTrajet(Ville arrivee, String date) {
+		// TODO Auto-generated method stub
+		return trajetDAO.find(arrivee, date);
 	}
 	
 }

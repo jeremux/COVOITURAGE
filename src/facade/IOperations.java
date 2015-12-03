@@ -14,6 +14,8 @@ public interface IOperations {
 	public List<Trajet> rechercherTrajet(Profil p,Ville arrivee);
 	public List<Trajet> rechercherTrajet(Ville arrivee,Ville dep);
 	public List<Trajet> rechercherTrajet(Ville arrivee,Ville dep,String date);
+	public List<Trajet> rechercherTrajet(Ville arrivee);
+	public List<Trajet> rechercherTrajet(Ville arrivee,String date);
 	public List<Trajet> getLesTrajet();
 
 }
