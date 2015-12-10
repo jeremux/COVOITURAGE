@@ -10,7 +10,7 @@ import model.Profil;
 
 public class ConnexionForm {
 
-	    private static final String CHAMP_EMAIL  = "email";
+	    private static final String CHAMP_EMAIL  = "login";
 	    private static final String CHAMP_PASS   = "motdepasse";
 
 	    private String              resultat;
@@ -26,15 +26,16 @@ public class ConnexionForm {
 
 	    public Profil connecterUtilisateur( HttpServletRequest request ) {
 	        /* Récupération des champs du formulaire */
-	        String email = getValeurChamp( request, CHAMP_EMAIL );
+	        String login = getValeurChamp( request, CHAMP_EMAIL );
 	        String motDePasse = getValeurChamp( request, CHAMP_PASS );
 	        ProfilGestionImpl profilDAO = new ProfilGestionImpl();
 	        Profil utilisateur = new Profil();
 
 	        /* Validation */
-	        utilisateur = profilDAO.findByEmail(email);
+	        utilisateur = profilDAO.findByPseudo(login);
+	        
 	        if (utilisateur.getId()==-1) 
-	        	setErreur(CHAMP_EMAIL, "Email non enregistré");
+	        	setErreur(CHAMP_EMAIL, "Login innexistant");
 	        else
 	        	if (!utilisateur.getPass().equals(motDePasse))
 	        		setErreur(CHAMP_PASS, "Mot de passe invalide");
