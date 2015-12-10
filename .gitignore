@@ -1,5 +1,7 @@
 /build/
-
+*.ucls
+*.pptx
+*.js
 *.class
 .classpath
 .settings*
