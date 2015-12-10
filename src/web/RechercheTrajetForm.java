@@ -19,12 +19,12 @@ public class RechercheTrajetForm {
 	public static final String CHAMP_VILLE_ARRIVEE = "villeArrivee";
 	public static final String CHAMP_DATE = "date";
 
-    private String              resultat;
+//    private String              resultat;
     private Map<String, String> erreurs      = new HashMap<String, String>();
 
-    public String getResultat() {
-        return resultat;
-    }
+//    public String getResultat() {
+//        return resultat;
+//    }
 
     public Map<String, String> getErreurs() {
         return erreurs;
@@ -48,9 +48,6 @@ public class RechercheTrajetForm {
         
         Ville vDep = villeDAO.findByCP(villeDepart);
         Ville vArr = villeDAO.findByCP(villeArrivee);
-        System.out.println("vDep = "+vDep.getId());
-        System.out.println("vArr = "+vArr.getId());
-        System.out.println("date = "+date);
         return facade.rechercherTrajet(vArr,vDep, date);
     }
 
