@@ -8,8 +8,8 @@ CREATE TABLE `Preference` (
 
 CREATE TABLE `Ville` (
 	`idVille`	INTEGER PRIMARY KEY AUTOINCREMENT,
-	`nom`	INTEGER,
-	`codePostal`	INTEGER
+	`nom`	INTEGER NOT NULL,
+	`codePostal`	INTEGER NOT NULL
 );
 
 CREATE TABLE `Profil` (
