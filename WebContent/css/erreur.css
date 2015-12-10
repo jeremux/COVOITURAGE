@@ -1,0 +1,13 @@
+.erreur {
+	color: red;
+}
+
+.success {
+	color: green;
+}
+
+.erreur_lien {
+	text-decoration: underline;
+	font-weight: bold;
+	color: #ffffff;
+}
