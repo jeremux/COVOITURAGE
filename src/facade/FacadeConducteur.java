@@ -1,11 +1,21 @@
 package facade;
 
+import java.util.List;
+
 import metier.TrajetGestionImpl;
+import model.Conducteur;
 import model.Trajet;
 
 public class FacadeConducteur implements IOperationsConducteur {
 	
-	private TrajetGestionImpl trajetDAO =  new TrajetGestionImpl(); 
+	private TrajetGestionImpl trajetDAO =  new TrajetGestionImpl();
+	private Conducteur c;
+	
+	public FacadeConducteur(Conducteur c) {
+		super();
+		this.setConducteur(c);
+		
+	}
 
 	@Override
 	public void ajouterTrajet(Trajet t) {
@@ -24,5 +34,20 @@ public class FacadeConducteur implements IOperationsConducteur {
 		trajetDAO.update(t);
 		
 	}
+
+	@Override
+	public List<Trajet> getAnnonces() {
+		return trajetDAO.find(this.getConducteur());
+	}
+
+	public Conducteur getConducteur() {
+		return c;
+	}
+
+	public void setConducteur(Conducteur c) {
+		this.c = c;
+	}
+
+	
 
 }

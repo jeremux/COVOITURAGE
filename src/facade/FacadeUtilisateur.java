@@ -5,6 +5,7 @@ import java.util.List;
 import metier.MessageGestionImpl;
 import metier.ProfilGestionImpl;
 import metier.TrajetGestionImpl;
+import metier.VoyageursGestionImpl;
 import model.Message;
 import model.Profil;
 import model.Trajet;
@@ -15,6 +16,7 @@ public class FacadeUtilisateur implements IOperations {
 	private MessageGestionImpl messageDAO = new MessageGestionImpl();
 	private ProfilGestionImpl profilDAO = new ProfilGestionImpl();
 	private TrajetGestionImpl trajetDAO = new TrajetGestionImpl();
+	private VoyageursGestionImpl voyageurDAO = new VoyageursGestionImpl();
 	
 	@Override
 	public void envoyerMessage(Message m) {
@@ -40,16 +42,23 @@ public class FacadeUtilisateur implements IOperations {
 	public List<Trajet> rechercherTrajet(Ville arrivee, Ville dep, String date) {
 		if(dep.getId() == -1 && (date == null  || date.equals("") ))
 		{
-			return trajetDAO.find(arrivee);
+			if(arrivee.getId()==-1)
+				return trajetDAO.findAll();
+			else
+				return trajetDAO.find(arrivee);
 		}
 		else if (dep.getId()==-1)
 		{
-			return trajetDAO.find(arrivee,date);
+			if(arrivee.getId()==-1)
+				return trajetDAO.find(date);
+			else
+				return trajetDAO.find(arrivee,date);
 		}
 		else 
 		{
 			return trajetDAO.find(dep,arrivee,date);
 		}
+	
 	}
 
 	@Override
@@ -66,6 +75,10 @@ public class FacadeUtilisateur implements IOperations {
 	public List<Trajet> rechercherTrajet(Ville arrivee, String date) {
 		// TODO Auto-generated method stub
 		return trajetDAO.find(arrivee, date);
+	}
+	
+	public List<Trajet> getReservations(Profil p) {
+		return voyageurDAO.find(p);
 	}
 	
 }
