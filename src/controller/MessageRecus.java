@@ -1,43 +1,44 @@
 package controller;
 
 import java.io.IOException;
-import javax.servlet.ServletConfig;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Profil;
-import web.InscriptionForm;
+import metier.MessageGestionImpl;
+import model.Message;
 
 /**
- * Servlet implementation class InscriptionServlet
+ * Servlet implementation class MessageRecus
  */
-@WebServlet(name = "inscription", urlPatterns = { "/inscription" })
-public class InscriptionServlet extends HttpServlet {
+@WebServlet(name = "messageRecus", urlPatterns = { "/messageRecus" })
+public class MessageRecus extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-      
-	public static final String ATT_USER = "utilisateur";
-    public static final String ATT_FORM = "form";
-    public static final String VUE = "/inscription.jsp";
-    public static final String VUE_POST_INSCRIPTION ="/postInscription.jsp";
-    public static final String ATT_SESSION_USER = "sessionUtilisateur";
-    
+	public static final String ATT_MSG = "messagesRecus";
+	public static final String VUE = "/messageRecus.jsp";
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InscriptionServlet() {
+    public MessageRecus() {
         super();
         // TODO Auto-generated constructor stub
     }
-
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/* Affichage de la page d'inscription */
+		MessageGestionImpl messageDAO = new MessageGestionImpl();
+		int idProfil = Integer.parseInt(request.getParameter("id"));
+		List<Message> messagesRecus = messageDAO.findRecus(idProfil);
+		
+		request.setAttribute( ATT_MSG,messagesRecus);
+		
         this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
 
@@ -45,15 +46,8 @@ public class InscriptionServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		InscriptionForm form = new InscriptionForm();
-		Profil utilisateur = form.inscrireUtilisateur(request);
-		
-		
-		
-		request.setAttribute( ATT_FORM, form );
-        request.setAttribute( ATT_USER, utilisateur );
-		
-        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

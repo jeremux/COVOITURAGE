@@ -35,9 +35,14 @@ public class ConnexionServlet extends HttpServlet {
 
         /* Traitement de la requête et récupération du bean en résultant */
         Profil utilisateur = form.connecterUtilisateur( request );
-
+        
         /* Récupération de la session depuis la requête */
         HttpSession session = request.getSession();
+        
+        if(!session.isNew()){
+        	session.invalidate();
+        	session=request.getSession();
+        }
 
         /**
          * Si aucune erreur de validation n'a eu lieu, alors ajout du bean
@@ -53,6 +58,13 @@ public class ConnexionServlet extends HttpServlet {
         request.setAttribute( ATT_FORM, form );
         request.setAttribute( ATT_USER, utilisateur );
 
-        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+//        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+        if ( form.getErreurs().isEmpty() ) {
+        	response.sendRedirect("accueil");
+        } else {
+        	this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+        }
+        
+        
     }
 }

@@ -28,7 +28,8 @@ public class RechercheServlet extends HttpServlet {
 	public static final String ATT_VILLE = "lesVilles";
 	public static final String ATT_TRAJET = "lesTrajets";
     public static final String ATT_FORM = "form";
-    public static final String VUE = "/RechercheTrajetForm.jsp";
+    public static final String VUE = "/recherche.jsp";
+    public static final String POST_VUE = "/post_recherche.jsp";
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -44,10 +45,10 @@ public class RechercheServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		VilleGestionImpl villeDAO = new VilleGestionImpl();
 		List<Ville> lesVilles = villeDAO.findAll();
-
+		int taille = -1;
 		
         request.setAttribute( ATT_VILLE, lesVilles);
-        
+        request.setAttribute( "taille", taille);
 		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
 
@@ -59,17 +60,26 @@ public class RechercheServlet extends HttpServlet {
 		VilleGestionImpl villeDAO = new VilleGestionImpl();
 		List<Ville> lesVilles = villeDAO.findAll();
 		List<Trajet> lesTrajets = form.rechercheTrajet(request);
-		//lesTrajets = form.rechercheTrajet(request);
+		int taille = 0;
 
 		for(Trajet t:lesTrajets)
 			System.out.println(t.toString());
 			
 		
 		request.setAttribute( ATT_FORM, form );
-        request.setAttribute( ATT_TRAJET, lesTrajets);
         request.setAttribute( ATT_VILLE, lesVilles);
 		
-        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+        taille = lesTrajets.size();
+        if(lesTrajets.size()>0)
+        {
+        	 request.setAttribute( ATT_TRAJET, lesTrajets);
+        	this.getServletContext().getRequestDispatcher(POST_VUE).forward( request, response );
+        }
+        else
+        {
+        	request.setAttribute( "taille", taille);
+        	this.getServletContext().getRequestDispatcher(VUE).forward( request, response );
+        }
 	}
 
 }

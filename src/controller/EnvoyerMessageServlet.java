@@ -3,7 +3,6 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,28 +10,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import metier.VilleGestionImpl;
+import model.Message;
 import model.Trajet;
 import model.Ville;
 import web.AjouterTrajetForm;
+import web.EnvoyerMessageForm;
 
 /**
- * Servlet implementation class PublicationServlet
+ * Servlet implementation class EnvoyerMessageServlet
  */
-@WebServlet(name = "publication", urlPatterns = { "/publication" })
-public class PublicationServlet extends HttpServlet {
-	/**
-	 * 
-	 */
+@WebServlet(name = "envoyerMessage", urlPatterns = { "/envoyerMessage" })
+public class EnvoyerMessageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String ATT_VILLE = "lesVilles";
-	public static final String ATT_TRAJET = "lesTrajets";
+
     public static final String ATT_FORM = "form";
-    public static final String VUE = "/ajouterTrajet.jsp";
-    public static final String VUE_POST = "/accueil";   
+    public static final String VUE = "/contactConducteur.jsp";
+    public static final String VUE_POST = "/accueil";
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PublicationServlet() {
+    public EnvoyerMessageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,10 +39,6 @@ public class PublicationServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		VilleGestionImpl villeDAO = new VilleGestionImpl();
-		List<Ville> lesVilles = villeDAO.findAll();
-		
-		request.setAttribute( ATT_VILLE, lesVilles);
 		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
 
@@ -52,21 +46,18 @@ public class PublicationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		VilleGestionImpl villeDAO = new VilleGestionImpl();
-		List<Ville> lesVilles = villeDAO.findAll();
-	
+		EnvoyerMessageForm form = new EnvoyerMessageForm();
+		Message m = form.ajouterMessage(request);
 		
-		AjouterTrajetForm form = new AjouterTrajetForm();
-		Trajet t = form.ajouterTrajet(request);
-		
-		request.setAttribute( ATT_VILLE, lesVilles);
 		request.setAttribute( ATT_FORM, form );
         
-        if(t.getId()!=-1)
+        if(m.getId()!=-1)
         {
         	this.getServletContext().getRequestDispatcher( VUE_POST ).forward( request, response );
         }
         else{
+        	String erreur = "une erreur est survenue";
+        	request.setAttribute("erreur", erreur);
         	this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
         }
 	}
