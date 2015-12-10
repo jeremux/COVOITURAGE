@@ -1,7 +1,15 @@
 package model;
 
-public class Profil {
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
+
+public class Profil implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String pseudo;
 	private String pass;
@@ -113,6 +121,38 @@ public class Profil {
 		this.preference = preference;
 	}
 	
+	public String toString()
+	{
+		String res = "***************************************";
+		res += "\nID = "+this.getId();
+		res += "\nNom = "+this.getNom();
+		res += "\nPrenom = "+this.getPrenom();
+		res += "\nVille ="+this.getVille().getNom();
+		res += "\nemail ="+this.getEmail();
+		res += "\npseudo =" +this.getPseudo();
+		res += "\ndateInscription ="+this.getDateInscription();
+		res += "\ndateNaissance ="+this.getDateNaissance();
+		res += "\nPreference id ="+this.getPreference().getId();
+		
+		return res;
+	}
 	
+	public int getAge() {
+	    int anneeProfil = Integer.parseInt(this.dateNaissance.split("-")[0]);
+	    Date date = new Date(); // your date
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(date);
+	    int anneeCourante = cal.get(Calendar.YEAR);
+	    return anneeCourante-anneeProfil;
+	}
+	
+	public int getAnciennete() {
+	    int anneeProfil = Integer.parseInt(this.dateInscription.split("-")[0]);
+	    Date date = new Date(); // your date
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(date);
+	    int anneeCourante = cal.get(Calendar.YEAR);
+	    return anneeCourante-anneeProfil;
+	}
 	
 }

@@ -8,6 +8,7 @@ public class Message {
 	private Profil expediteur;
 	private Profil destinataire;
 	private Trajet trajet;
+	private String sensTrajet;
 	
 	public Message() {
 		super();
@@ -69,6 +70,27 @@ public class Message {
 
 	public void setTrajet(Trajet trajet) {
 		this.trajet = trajet;
+	}
+	
+	public String toString()
+	{
+		String res = "***************************************";
+		res += "\nDestinataire = "+this.getDestinataire().getNom();
+		res += "\nExpediteur = "+this.getExpediteur().getNom();
+		res += "\nObjet = "+this.getObjet();
+		res += "\nContenu ="+this.getContenu();
+		res += "\nDepart ="+this.getTrajet().getDepart().getNom();
+		res += "\nArrivee ="+this.getTrajet().getDestination().getNom();
+		
+		return res;
+	}
+
+	public String getSensTrajet() {
+		return sensTrajet;
+	}
+
+	public void setSensTrajet(String sensTrajet) {
+		this.sensTrajet = sensTrajet;
 	}
 	
 	

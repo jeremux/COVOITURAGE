@@ -1,6 +1,6 @@
 package model;
 
-public class Trajet {
+public class Trajet implements Comparable<Trajet>{
 	
 	private int id;
 	private Ville depart;
@@ -10,10 +10,12 @@ public class Trajet {
 	private int places;
 	private double prix;
 	private Conducteur conducteur;
+	private String date2;
 	
 	public Trajet() {
 		super();
 		// TODO Auto-generated constructor stub
+		this.id=-1;
 	}
 
 	public Trajet(Ville depart, Ville destination, String date, String heure, int places, double prix,
@@ -21,7 +23,7 @@ public class Trajet {
 		super();
 		this.depart = depart;
 		this.destination = destination;
-		this.date = date;
+		this.setDate(date);
 		this.heure = heure;
 		this.places = places;
 		this.prix = prix;
@@ -58,6 +60,8 @@ public class Trajet {
 
 	public void setDate(String date) {
 		this.date = date;
+		String[] tmp = date.split("-");
+		setDate2(tmp[2]+"-"+tmp[1]+"-"+tmp[0]);
 	}
 
 	public String getHeure() {
@@ -104,6 +108,19 @@ public class Trajet {
 		res += "\n conducteur ="+this.getConducteur().getPrenom();
 		
 		return res;
+	}
+
+	public String getDate2() {
+		return date2;
+	}
+
+	public void setDate2(String date2) {
+		this.date2 = date2;
+	}
+
+	@Override
+	public int compareTo(Trajet o) {
+		return Double.compare(this.prix, o.prix);
 	}
 	
 }
