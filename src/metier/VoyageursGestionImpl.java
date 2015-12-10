@@ -1,10 +1,17 @@
 package metier;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import connexion.SingletonConnection;
 import dao.DAO;
+import model.Conducteur;
 import model.Passager;
+import model.Profil;
 import model.Trajet;
 import model.Voyageurs;
 
@@ -70,5 +77,64 @@ public class VoyageursGestionImpl extends DAO<Voyageurs> {
 	public Voyageurs update(Voyageurs v) {
 		return null;
 	}
+	
+	public List<Trajet> find(Profil p)
+	{
+		List<Trajet> res =  new ArrayList<Trajet>();
+		
+		Trajet t = new Trajet();
+		TrajetGestionImpl tg = new TrajetGestionImpl();
+
+		Connection connection = SingletonConnection.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Voyageurs where idPassager=?;");
+			ps.setInt(1,p.getId());
+			ResultSet rs = ps.executeQuery();
+	
+			while(rs.next())
+			{	
+				
+				t = tg.find(rs.getInt("idTrajet"));
+				
+				res.add(t);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur select table Voyageurs");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	public List<Profil> findByTrajet(Trajet t) {
+		List<Profil> res =  new ArrayList<Profil>();
+		
+		Profil p = new Profil();
+		ProfilGestionImpl pg = new ProfilGestionImpl();
+
+		Connection connection = SingletonConnection.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Voyageurs where idTrajet=?;");
+			ps.setInt(1,t.getId());
+			ResultSet rs = ps.executeQuery();
+	
+			while(rs.next())
+			{	
+				
+				p = pg.find(rs.getInt("idPassager"));
+				
+				res.add(p);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur select table Voyageurs");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+
 
 }

@@ -22,6 +22,7 @@ public class TrajetGestionImpl extends DAO<Trajet> {
 		Trajet t = new Trajet();
 		VilleGestionImpl vg = new VilleGestionImpl();
 		ProfilGestionImpl pg = new ProfilGestionImpl();
+		Conducteur c = new Conducteur();
 		
 		Connection connection = SingletonConnection.getConnection();
 		try {
@@ -42,7 +43,8 @@ public class TrajetGestionImpl extends DAO<Trajet> {
 					t.setHeure(rs.getString("heure"));
 					t.setPlaces(rs.getInt("places"));
 					t.setPrix(rs.getDouble("prix"));
-					t.setConducteur((Conducteur) pg.find(rs.getInt("idConducteur")));
+					c = new Conducteur(pg.find(rs.getInt("idConducteur")));
+					t.setConducteur(c);
 				
 				}
 			}
@@ -314,6 +316,80 @@ List<Trajet> res =  new ArrayList<Trajet>();
 			PreparedStatement ps = connection.prepareStatement("select * from Trajet where villeArrivee=? and date=?;");
 			ps.setInt(1,vg.findVille(arrivee).getId());
 			ps.setString(2, date);
+			ResultSet rs = ps.executeQuery();
+	
+			while(rs.next())
+			{	
+				t = new Trajet();
+				t.setId(rs.getInt("idTrajet"));
+				t.setDepart(vg.find(rs.getInt("villeDepart")));
+				t.setDestination(vg.find(rs.getInt("villeArrivee")));
+				t.setDate(rs.getString("date"));
+				t.setHeure(rs.getString("heure"));
+				t.setPlaces(rs.getInt("places"));
+				t.setPrix(rs.getDouble("prix"));
+				c = new Conducteur(pg.find(rs.getInt("idConducteur")));
+				t.setConducteur(c);
+				
+				
+				res.add(t);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur select table Trajet");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+
+	public List<Trajet> find(Conducteur conducteur) {
+		List<Trajet> res =  new ArrayList<Trajet>();
+		
+		Trajet t = new Trajet();
+		VilleGestionImpl vg = new VilleGestionImpl();
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Trajet where idConducteur=?;");
+			ps.setInt(1,conducteur.getId());
+			ResultSet rs = ps.executeQuery();
+	
+			while(rs.next())
+			{	
+				t = new Trajet();
+				t.setId(rs.getInt("idTrajet"));
+				t.setDepart(vg.find(rs.getInt("villeDepart")));
+				t.setDestination(vg.find(rs.getInt("villeArrivee")));
+				t.setDate(rs.getString("date"));
+				t.setHeure(rs.getString("heure"));
+				t.setPlaces(rs.getInt("places"));
+				t.setPrix(rs.getDouble("prix"));
+				t.setConducteur(conducteur);
+				
+				
+				res.add(t);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur select table Trajet");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+
+	public List<Trajet> find(String date) {
+		List<Trajet> res =  new ArrayList<Trajet>();
+		Conducteur c;
+		Trajet t = new Trajet();
+		VilleGestionImpl vg = new VilleGestionImpl();
+		ProfilGestionImpl pg = new ProfilGestionImpl();
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Trajet where date like ?;");
+			ps.setString(1,date);
 			ResultSet rs = ps.executeQuery();
 	
 			while(rs.next())

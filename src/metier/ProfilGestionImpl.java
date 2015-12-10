@@ -18,7 +18,7 @@ public class ProfilGestionImpl extends DAO<Profil> {
 		PreferenceGestionImpl pg =  new PreferenceGestionImpl();
 		
 		try {
-			PreparedStatement ps = connection.prepareStatement("select * from Profil where pseudo=?");
+			PreparedStatement ps = connection.prepareStatement("select * from Profil where pseudo like ?");
 			ps.setString(1,pseudo);
 			ResultSet rs = ps.executeQuery();
 			
@@ -29,6 +29,7 @@ public class ProfilGestionImpl extends DAO<Profil> {
 				if(pseudoRecupere.equals(pseudo))
 				{
 					p.setId(rs.getInt("idProfil"));
+					p.setEmail(rs.getString("email"));
 					p.setPseudo(pseudo);
 					p.setPass(rs.getString("pass"));
 					p.setDateInscription(rs.getString("dateInscription"));
@@ -48,6 +49,7 @@ public class ProfilGestionImpl extends DAO<Profil> {
 			System.err.println("Erreur getProfilFromPseudo table Profil");
 			e.printStackTrace();
 		}
+		System.out.println("id = "+p.getId());
 		return p;
 	}
 
@@ -113,6 +115,7 @@ public class ProfilGestionImpl extends DAO<Profil> {
 					{
 						p.setId(rs.getInt("idProfil"));
 						p.setPseudo(rs.getString("pseudo"));
+						p.setEmail(rs.getString("email"));
 						p.setPass(rs.getString("pass"));
 						p.setDateInscription(rs.getString("dateInscription"));
 						p.setDateNaissance(rs.getString("dateNaissance"));
@@ -210,6 +213,46 @@ public class ProfilGestionImpl extends DAO<Profil> {
 		
 		return res;
 	}
+	
+	public Profil update(Profil old,Profil newProfil) {
+		Profil res= new Profil();
+		try {
+			PreparedStatement ps = this.connection.prepareStatement("update Profil set "
+					+ "pseudo=?,"
+					+ "pass= ?,"
+					+ "email= ?,"
+					+ "dateInscription= ?,"
+					+ "dateNaissance=?,"
+					+ "nom=?,"
+					+ "prenom=?,"
+					+ "ville=?,"
+					+ "preference=?"
+					+ "where idProfil=?");
+	
+			ps.setString(1,newProfil.getPseudo());
+			ps.setString(2, newProfil.getPass());
+			ps.setString(3, newProfil.getEmail());
+			ps.setString(4, newProfil.getDateInscription());
+			ps.setString(5, newProfil.getDateNaissance());
+			ps.setString(6, newProfil.getNom());
+			ps.setString(7, newProfil.getPrenom());
+			ps.setInt(8, newProfil.getVille().getId());
+			ps.setInt(9, newProfil.getPreference().getId());
+			ps.setInt(10, old.getId());
+		
+			
+			ps.executeUpdate();
+			
+			res = this.find(old.getId());
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur insert into table Message");
+			e.printStackTrace();
+		}
+		System.out.println(newProfil.toString());
+		return res;
+	}
+
 
 	@Override
 	public void delete(Profil p) {

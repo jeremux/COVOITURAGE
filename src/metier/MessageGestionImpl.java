@@ -3,6 +3,8 @@ package metier;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import dao.DAO;
@@ -32,7 +34,7 @@ public class MessageGestionImpl extends DAO<Message> {
 					m.setId(idp);
 					m.setContenu(rs.getString("contenu"));
 					m.setDestinataire(profilDao.find(rs.getInt("idDestinataire")));
-					m.setDestinataire(profilDao.find(rs.getInt("idExpediteur")));
+					m.setExpediteur(profilDao.find(rs.getInt("idExpediteur")));
 					m.setObjet(rs.getString("objet"));
 					m.setTrajet(trajetDao.find(rs.getInt("idTrajet")));
 				}
@@ -111,6 +113,76 @@ public class MessageGestionImpl extends DAO<Message> {
 			e.printStackTrace();
 		}
 		
+	}
+
+	public List<Message> findRecus(int idProfil) {
+		List<Message> res = new ArrayList<Message>();
+		Message m = new Message();
+		ProfilGestionImpl profilDao = new ProfilGestionImpl();
+		TrajetGestionImpl trajetDao = new TrajetGestionImpl();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Message where idDestinataire=?");
+			ps.setInt(1,idProfil);
+			ResultSet rs = ps.executeQuery();
+			
+			int idp;
+			while(rs.next())
+			{
+				idp = rs.getInt("idDestinataire");
+				if(idp==idProfil)
+				{
+					m = new Message();
+					m.setId(idp);
+					m.setContenu(rs.getString("contenu"));
+					m.setDestinataire(profilDao.find(rs.getInt("idDestinataire")));
+					m.setExpediteur(profilDao.find(rs.getInt("idExpediteur")));
+					m.setObjet(rs.getString("objet"));
+					m.setTrajet(trajetDao.find(rs.getInt("idTrajet")));
+					
+					res.add(m);
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println("Erreur getPreference table Preference");
+			e.printStackTrace();
+		}
+	
+		return res;
+	}
+
+	public List<Message> findEnvoyes(int idProfil) {
+		List<Message> res = new ArrayList<Message>();
+		Message m = new Message();
+		ProfilGestionImpl profilDao = new ProfilGestionImpl();
+		TrajetGestionImpl trajetDao = new TrajetGestionImpl();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from Message where idExpediteur=?");
+			ps.setInt(1,idProfil);
+			ResultSet rs = ps.executeQuery();
+			
+			int idp;
+			while(rs.next())
+			{
+				idp = rs.getInt("idExpediteur");
+				if(idp==idProfil)
+				{
+					m = new Message();
+					m.setId(idp);
+					m.setContenu(rs.getString("contenu"));
+					m.setDestinataire(profilDao.find(rs.getInt("idDestinataire")));
+					m.setExpediteur(profilDao.find(rs.getInt("idExpediteur")));
+					m.setObjet(rs.getString("objet"));
+					m.setTrajet(trajetDao.find(rs.getInt("idTrajet")));
+					
+					res.add(m);
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println("Erreur getPreference table Preference");
+			e.printStackTrace();
+		}
+	
+		return res;
 	}
 
 }
