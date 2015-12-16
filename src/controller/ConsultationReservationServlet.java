@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import facade.FacadeAdmin;
 import facade.FacadeConducteur;
 import facade.FacadeUtilisateur;
 import metier.ProfilGestionImpl;
@@ -25,6 +26,7 @@ public class ConsultationReservationServlet extends HttpServlet {
 	public static final String ATT_ANNONCES = "mesReservations";
 	public static final String VUE = "/mesAnnoncesReservations.jsp";
 	private static final String TITRE ="titre";
+	private static final String FACADE = "facadeAdmin";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -41,12 +43,14 @@ public class ConsultationReservationServlet extends HttpServlet {
 		ProfilGestionImpl profilDAO = new ProfilGestionImpl();
 		int idProfil = Integer.parseInt(request.getParameter("id"));
 		FacadeUtilisateur facade = new FacadeUtilisateur();
+		FacadeAdmin facadeAdmin = new FacadeAdmin();
 		Profil p = profilDAO.find(idProfil);
 		List<Trajet> mesReservations = facade.getReservations(p);
 		String titre = "Mes reservations";
 		
 		request.setAttribute(TITRE, titre);
 		request.setAttribute( ATT_ANNONCES,mesReservations);
+		request.setAttribute(FACADE, facadeAdmin);
 		
         this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
