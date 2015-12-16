@@ -55,16 +55,8 @@ CREATE TABLE `Message` (
 
 CREATE TABLE `Voyageurs` (
 	`idPassager`	INTEGER,
-	`idTrajet`	INTEGER,
-	PRIMARY KEY(idPassager,idTrajet),
-	FOREIGN KEY(`idPassager`) REFERENCES Profil ( idProfil ),
-	FOREIGN KEY(`idTrajet`) REFERENCES Trajet ( idTrajet )
-);
-
-CREATE TABLE `Paiement` (
-	`idPassager`	INTEGER,
-	`idTrajet`	INTEGER,
-	`paiementValide`	INTEGER,
+	`idTrajet`	INTEGER,	
+	`paye`		INTEGER,
 	PRIMARY KEY(idPassager,idTrajet),
 	FOREIGN KEY(`idPassager`) REFERENCES Profil ( idProfil ),
 	FOREIGN KEY(`idTrajet`) REFERENCES Trajet ( idTrajet )

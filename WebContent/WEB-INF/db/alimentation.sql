@@ -51,13 +51,7 @@ INSERT INTO "Message" VALUES(1,'Valise','Il y a de la place pour une valise moye
 
 /* table Voyageurs */
 
-INSERT INTO "Voyageurs" VALUES(2,1);
-INSERT INTO "Voyageurs" VALUES(2,3);
-INSERT INTO "Voyageurs" VALUES(3,1);
+INSERT INTO "Voyageurs" VALUES(2,1,0);
+INSERT INTO "Voyageurs" VALUES(2,3,1);
+INSERT INTO "Voyageurs" VALUES(3,1,1);
 
-/* table Paiement */
-
-INSERT INTO "Paiement" VALUES(2,1,1);
-INSERT INTO "Paiement" VALUES(2,3,1);
-INSERT INTO "Paiement" VALUES(3,1,1);
-INSERT INTO "Paiement" VALUES(4,2,0);
