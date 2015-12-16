@@ -1,3 +1,9 @@
+/*
+ * Classe traiter le formulaire d'inscription
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package web;
 
 import java.text.DateFormat;
@@ -66,8 +72,7 @@ public class InscriptionForm {
         Preference pref = new Preference(aimeMusique, aimeAnimaux, aimeDiscution, fumeur);
         Ville v = villeDAO.findByCP(codePostal);
         Preference p = preferenceDAO.getPreference(pref);
-        
-        System.out.println("CP = "+codePostal);
+       
         
         if(v.getId()==-1)
         {

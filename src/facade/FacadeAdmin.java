@@ -1,3 +1,9 @@
+/*
+ * Classe pour gérer les opérations administrateur
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package facade;
 
 import metier.MessageGestionImpl;

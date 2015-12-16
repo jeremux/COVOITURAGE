@@ -2,12 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:if test="${empty sessionScope.sessionUtilisateur}">
+	<jsp:forward page="/connexion"/>
+</c:if>
+
 
 <!DOCTYPE html> 
 <html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Station Shop - Checkout Page</title>
+<title>Edition du profil</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <!-- templatemo 352 station shop -->

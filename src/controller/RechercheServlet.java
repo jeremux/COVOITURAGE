@@ -1,3 +1,9 @@
+/*
+ * Classe rechercher un trajet
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package controller;
 
 import java.io.IOException;
@@ -23,13 +29,13 @@ import web.RechercheTrajetForm;
  */
 @WebServlet(name = "recherche", urlPatterns = { "/recherche" })
 public class RechercheServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-    
-	public static final String ATT_VILLE = "lesVilles";
-	public static final String ATT_TRAJET = "lesTrajets";
-    public static final String ATT_FORM = "form";
-    public static final String VUE = "/recherche.jsp";
-    public static final String POST_VUE = "/post_recherche.jsp";
+	private static final long   serialVersionUID = 1L;
+
+	public  static final String ATT_VILLE        = "lesVilles";
+	public  static final String ATT_TRAJET       = "lesTrajets";
+    public  static final String ATT_FORM         = "form";
+    public  static final String VUE              = "/recherche.jsp";
+    public  static final String POST_VUE         = "/post_recherche.jsp";
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -62,14 +68,14 @@ public class RechercheServlet extends HttpServlet {
 		List<Trajet> lesTrajets = form.rechercheTrajet(request);
 		int taille = 0;
 
-		for(Trajet t:lesTrajets)
-			System.out.println(t.toString());
 			
 		
 		request.setAttribute( ATT_FORM, form );
         request.setAttribute( ATT_VILLE, lesVilles);
 		
         taille = lesTrajets.size();
+        
+        // si on trouve des trajets
         if(lesTrajets.size()>0)
         {
         	 request.setAttribute( ATT_TRAJET, lesTrajets);

@@ -1,3 +1,9 @@
+/*
+ * Classe pour représenter UN voyageur
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package model;
 
 public class Voyageurs {
@@ -6,6 +12,7 @@ public class Voyageurs {
 	private Trajet trajet;
 	private boolean paye;
 	private int flagExistence;
+	
 	public Voyageurs() {
 		super();
 		setFlagExistence(-1);

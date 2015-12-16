@@ -26,22 +26,22 @@
         <div id="content" class="float_r">
    			
    			
-   			<form method="post" enctype="application/x-www-form-urlencoded" action="payerTrajet?idProfil=<%= request.getParameter("idProfil") %>&idTrajet=<%= request.getParameter("idTrajet")%>">
+   			<form method="post" enctype="application/x-www-form-urlencoded" action="payerTrajet?idProfil=<%= request.getParameter("idProfil") %>&amp;idTrajet=<%= request.getParameter("idTrajet")%>">
     <fieldset name="personalInfo">
-      <label for="Nom">Nom</label>
+      <label for="nom">Nom</label>
       <input type="text" id="nom" 
              >
     </fieldset>
 
     <fieldset name="cardInfo">
-      <label for="cardNum" required>Card Number</label>
+      <label for="cardNum" >Card Number</label>
       <input type="tel" id="cardNum" 
              placeholder="0000 0000 0000 0000">
 
-      <label for="cardExp" required>Expires</label>
+      <label for="cardExp">Expires</label>
       <input type="tel" id="cardExp" placeholder="MM/YY">  
 
-      <label for="cardCVC" required>CVC</label>
+      <label for="cardCVC">CVC</label>
       <input type="tel" id="cardCVC" placeholder="***">
     </fieldset>
 	<div class="cleaner h30"></div>

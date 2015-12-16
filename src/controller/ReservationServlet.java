@@ -1,3 +1,9 @@
+/*
+ * Classe pour reserver un trajet
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package controller;
 
 import java.io.IOException;
@@ -26,7 +32,6 @@ public class ReservationServlet extends HttpServlet {
      */
     public ReservationServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -55,7 +60,6 @@ public class ReservationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

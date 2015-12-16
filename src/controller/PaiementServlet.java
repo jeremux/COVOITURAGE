@@ -1,3 +1,9 @@
+/*
+ * Classe pour gerer le paiement
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package controller;
 
 import java.io.IOException;
@@ -20,8 +26,8 @@ import model.Voyageurs;
  */
 @WebServlet(name = "payerTrajet", urlPatterns = { "/payerTrajet" })
 public class PaiementServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	public static final String VUE = "/paiement.jsp";
+	private static final long   serialVersionUID = 1L;
+	public  static final String VUE              = "/paiement.jsp";
        
    
 
@@ -37,33 +43,31 @@ public class PaiementServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int idTrajet = Integer.parseInt(request.getParameter("idTrajet"));
-		int idProfil = Integer.parseInt(request.getParameter("idProfil"));
-		
-		ProfilGestionImpl profilDAO = new ProfilGestionImpl();
-		TrajetGestionImpl trajetDAO = new TrajetGestionImpl();
+		int                  idTrajet     = Integer.parseInt(request.getParameter("idTrajet"));
+		int                  idProfil     = Integer.parseInt(request.getParameter("idProfil"));
+	
+		ProfilGestionImpl    profilDAO    = new ProfilGestionImpl();
+		TrajetGestionImpl    trajetDAO    = new TrajetGestionImpl();
 		VoyageursGestionImpl voyageursDAO = new VoyageursGestionImpl();
+	
+		Voyageurs            v            = new Voyageurs();
+		//l'entrée à update
+		v                                 = voyageursDAO.find(idTrajet, idProfil);
 		
-		Voyageurs v = new Voyageurs();
-		v = voyageursDAO.find(idTrajet, idProfil);
-		
-		System.out.println("idTrajet = "+idTrajet);
-		System.out.println("idProfil = "+idProfil);
-		System.out.println("DEBUG = "+v.isPaye());
 		
 		v.setPassager(new Passager(profilDAO.find(idProfil)));
 		Trajet t = trajetDAO.find(idTrajet);
+		//on met à jour le trajet
 		t.decrementePlace();
 		t = trajetDAO.update(t);
+		
+		//on met à jour le paiement et le trajet
 		v.setTrajet(t);
 		v.setPaye(true);
 		
 		v = voyageursDAO.update(v);
 		v = voyageursDAO.find(idTrajet, idProfil);
-		
-		System.out.println("idTrajet = "+idTrajet);
-		System.out.println("idProfil = "+idProfil);
-		System.out.println("DEBUG = "+v.isPaye());
+
 		
 		Profil p = (Profil) request.getSession().getAttribute("sessionUtilisateur");
 		

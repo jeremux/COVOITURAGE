@@ -1,3 +1,9 @@
+/*
+ * Classe pour représenter un passager
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package model;
 
 public class Passager extends Profil {

@@ -1,3 +1,9 @@
+/*
+ * Classe pour l'interaction avec la table Ville
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package metier;
 
 import java.sql.Connection;
@@ -17,58 +23,53 @@ public class VilleGestionImpl extends DAO<Ville> {
 
 	public Ville findVille(Ville v) {
 		Ville res = new Ville();
-		
+
 		Connection connection = SingletonConnection.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("select * from Ville where nom=? and codePostal=?;");
 			ps.setString(1, v.getNom());
 			ps.setString(2, v.getCodePostal());
 			ResultSet rs = ps.executeQuery();
-			
+
 			String cpRecupere;
 			String nomRecupere;
-			while(rs.next())
-			{
-				cpRecupere=rs.getString("codePostal");
-				nomRecupere=rs.getString("nom");
-				if(cpRecupere.equals(v.getCodePostal())&&nomRecupere.equals(v.getNom()))
-				{
+			while (rs.next()) {
+				cpRecupere = rs.getString("codePostal");
+				nomRecupere = rs.getString("nom");
+				if (cpRecupere.equals(v.getCodePostal()) && nomRecupere.equals(v.getNom())) {
 					res.setId(rs.getInt("idVille"));
 					res.setNom(rs.getString("nom"));
 					res.setCodePostal(rs.getString("codePostal"));
 				}
 			}
 		} catch (SQLException e) {
-			System.err.println("Erreur getVille table Ville");
+			System.err.println("Erreur findVille table Ville");
 			e.printStackTrace();
 		}
 		return res;
 	}
 
-
 	public Ville findByCP(String cp) {
 		Ville v = new Ville();
-		
-		if(cp == null || cp.equals("") )
+
+		if (cp == null || cp.equals(""))
 			return v;
-		
-		
+
 		Connection connection = SingletonConnection.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("select * from Ville where codePostal=?");
 			ps.setString(1, cp);
 			ResultSet rs = ps.executeQuery();
-			
-			String cpRecupere="";
-			while(rs.next())
-			{
+
+			String cpRecupere = "";
+			while (rs.next()) {
 				cpRecupere = rs.getString("codePostal");
-				if(cp.equals(cpRecupere))
-				{
+				if (cp.equals(cpRecupere)) {
 					v.setId(rs.getInt("idVille"));
 					v.setNom(rs.getString("nom"));
 					v.setCodePostal(cp);
-					//System.out.println(rs.getInt("idVille")+" = "+rs.getString("nom"));
+					// System.out.println(rs.getInt("idVille")+" =
+					// "+rs.getString("nom"));
 				}
 			}
 		} catch (SQLException e) {
@@ -81,18 +82,16 @@ public class VilleGestionImpl extends DAO<Ville> {
 	@Override
 	public Ville find(int id) {
 		Ville v = new Ville();
-		
+
 		try {
 			PreparedStatement ps = connection.prepareStatement("select * from Ville where idVille=?");
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
-			
+
 			int idv;
-			while(rs.next())
-			{
+			while (rs.next()) {
 				idv = rs.getInt("idVille");
-				if(idv==id)
-				{
+				if (idv == id) {
 					v.setId(idv);
 					v.setNom(rs.getString("nom"));
 					v.setCodePostal(rs.getString("codePostal"));
@@ -108,57 +107,53 @@ public class VilleGestionImpl extends DAO<Ville> {
 	@Override
 	public Ville create(Ville v) {
 		Ville tmp = findByCP(v.getCodePostal());
-		/* si id = -1 => inexistant => on insert */ 
-		if(tmp.getId()==-1)
-			
-		{try {
-			
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO Ville (nom,codePostal) values (?,?);");
-			ps.setString(1,v.getNom());
-			ps.setString(2, v.getCodePostal());
-			
-			ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			System.err.println("Erreur prepareStatement table Ville");
-			e.printStackTrace();
-		}
-		
-		/* On met à jour l'id */
-		v.setId(findVille(v).getId());
-		}
-		else
+		/* si id = -1 => inexistant => on insert */
+		if (tmp.getId() == -1)
+
 		{
+			try {
+
+				PreparedStatement ps = connection.prepareStatement("INSERT INTO Ville (nom,codePostal) values (?,?);");
+				ps.setString(1, v.getNom());
+				ps.setString(2, v.getCodePostal());
+
+				ps.executeUpdate();
+
+			} catch (SQLException e) {
+				System.err.println("Erreur prepareStatement table Ville");
+				e.printStackTrace();
+			}
+
+			/* On met à jour l'id */
+			v.setId(findVille(v).getId());
+		} else {
 			/* on met a jour l'id par rapport à l'existant */
 			v.setId(tmp.getId());
 		}
-		
+
 		return v;
 	}
 
 	@Override
 	public Ville update(Ville v) {
-		Ville res= new Ville();
+		Ville res = new Ville();
 		try {
-			PreparedStatement ps = this.connection.prepareStatement("update Ville set "
-					+ "nom=?,"
-					+ "codePostal= ?,"
-					+ "where idVille=?");
-	
+			PreparedStatement ps = this.connection
+					.prepareStatement("update Ville set " + "nom=?," + "codePostal= ?," + "where idVille=?");
+
 			ps.setString(1, v.getNom());
 			ps.setString(2, v.getCodePostal());
 			ps.setInt(3, v.getId());
-		
-			
+
 			ps.executeUpdate();
-			
+
 			res = this.find(v.getId());
-			
+
 		} catch (SQLException e) {
 			System.err.println("Erreur insert into Trajet");
 			e.printStackTrace();
 		}
-		
+
 		return res;
 	}
 
@@ -167,48 +162,41 @@ public class VilleGestionImpl extends DAO<Ville> {
 		Connection connection = SingletonConnection.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("delete from Ville where codePostal=?");
-			ps.setString(1,v.getCodePostal());
-			
+			ps.setString(1, v.getCodePostal());
+
 			ps.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			System.err.println("Erreur prepareStatement table Ville");
 			e.printStackTrace();
 		}
-		
+
 	}
 
-
 	public List<Ville> findAll() {
-		List<Ville> res =  new ArrayList<Ville>();
-		
+		List<Ville> res = new ArrayList<Ville>();
+
 		Ville v = new Ville();
-		
+
 		try {
 			PreparedStatement ps = connection.prepareStatement("select * from Ville;");
 			ResultSet rs = ps.executeQuery();
-	
-			while(rs.next())
-			{	
+
+			while (rs.next()) {
 				v = new Ville();
 				v.setId(rs.getInt("idVille"));
 				v.setNom(rs.getString("nom"));
 				v.setCodePostal(rs.getString("codePostal"));
-			
-				
-				
+
 				res.add(v);
 			}
-			
+
 		} catch (SQLException e) {
 			System.err.println("Erreur select table Trajet");
 			e.printStackTrace();
 		}
-		
+
 		return res;
 	}
 
-	
 }
-
-

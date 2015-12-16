@@ -1,3 +1,9 @@
+/*
+ * Classe pour afficher les messages recus
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package controller;
 
 import java.io.IOException;
@@ -17,25 +23,24 @@ import model.Message;
  */
 @WebServlet(name = "messageRecus", urlPatterns = { "/messageRecus" })
 public class MessageRecus extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	public static final String ATT_MSG = "messagesRecus";
-	public static final String VUE = "/messageRecus.jsp";
+	private static final long   serialVersionUID = 1L;
+	public  static final String ATT_MSG          = "messagesRecus";
+	public  static final String VUE              = "/messageRecus.jsp";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public MessageRecus() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		MessageGestionImpl messageDAO = new MessageGestionImpl();
-		int idProfil = Integer.parseInt(request.getParameter("id"));
-		List<Message> messagesRecus = messageDAO.findRecus(idProfil);
+		MessageGestionImpl messageDAO    = new MessageGestionImpl();
+		int                idProfil      = Integer.parseInt(request.getParameter("id"));
+		List<Message>      messagesRecus = messageDAO.findRecus(idProfil);
 		
 		request.setAttribute( ATT_MSG,messagesRecus);
 		
@@ -46,7 +51,6 @@ public class MessageRecus extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

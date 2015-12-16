@@ -1,11 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:if test="${empty sessionScope.sessionUtilisateur}">
+	<jsp:forward page="/connexion"/>
+</c:if>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Mes ${titre}</title>
 <link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
 <link rel="stylesheet" type="text/css" href="css/table.css" />
@@ -27,14 +32,14 @@
         <div id="content" class="float_r">
    			<h1>${titre}</h1>
         	<table style="width:680px">
-                   	  	<tr bgcolor="#ddd">
-                        	<th width="180" align="left">Depart</th> 
-                       	  	<th width="180" align="left">Arrivée</th> 
+                   	  	<tr style="background-color:#ddd">
+                        	<th style="width:180px;align:left" >Depart</th> 
+                       	  	<th style="width:180px;align:left">Arrivée</th> 
                        	  	
-                            <th width="360" align="left">Date</th>  
-                        	<th width="50" align="right"> </th> 
-                        	<th width="120" align="right"> </th> 
-                        	<th width="120" align="left">Détails</th>
+                            <th style="width:360px;align:left" >Date</th>  
+                        	<th style="width:50px;align:right" > </th> 
+                        	<th style="width:120px;align:right" > </th> 
+                        	<th style="width:120px;align:left" >Détails</th>
                       	</tr>
 						<c:forEach items="${mesAnnonces}" var="trajet">
 						<tr>
@@ -44,7 +49,7 @@
 					
 					
 								<td><a href="infoTrajet?id=${trajet.getId()}">Détails</a></td>
-                            	<td><a href="supprimerTrajet?idTrajet=${trajet.getId()}&idConducteur=${sessionScope.sessionUtilisateur.id}">Supprimer</a></td>
+                            	<td><a href="supprimerTrajet?idTrajet=${trajet.getId()}&amp;idConducteur=${sessionScope.sessionUtilisateur.id}">Supprimer</a></td>
                             	<td><a href="infoTrajet?id=${trajet.getId()}">${trajet.getDepart().getNom()} -> ${trajet.getDestination().getNom()}</a></td>
 							</tr>	
 						</c:forEach>
@@ -55,8 +60,8 @@
 								<td>${trajet.getDate2()}</td>
 					
 								<c:if test="${!facadeAdmin.isPaye(trajet,sessionScope.sessionUtilisateur)}">
-								<td><a href="annulerReservation?idPassager=${sessionScope.sessionUtilisateur.getId()}&idTrajet=${trajet.getId()}">Annuler</a></td>
-                            	<td><a href="payerTrajet?idProfil=${sessionScope.sessionUtilisateur.getId()}&idTrajet=${trajet.getId()}">Payer</a></td>
+								<td><a href="annulerReservation?idPassager=${sessionScope.sessionUtilisateur.getId()}&amp;idTrajet=${trajet.getId()}">Annuler</a></td>
+                            	<td><a href="payerTrajet?idProfil=${sessionScope.sessionUtilisateur.getId()}&amp;idTrajet=${trajet.getId()}">Payer</a></td>
                             	</c:if>
                             	<c:if test="${facadeAdmin.isPaye(trajet,sessionScope.sessionUtilisateur)}">
 								<td colspan="2"><span class="success">Paiement effectué</span></td>

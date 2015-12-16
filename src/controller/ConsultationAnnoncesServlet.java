@@ -1,3 +1,10 @@
+/*
+ * Classe pour consulter ses
+ * annonces poster
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package controller;
 
 import java.io.IOException;
@@ -19,40 +26,48 @@ import model.Trajet;
  */
 @WebServlet(name = "mesAnnonces", urlPatterns = { "/mesAnnonces" })
 public class ConsultationAnnoncesServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	public static final String ATT_ANNONCES = "mesAnnonces";
-	public static final String VUE = "/mesAnnoncesReservations.jsp";
-	private static final String TITRE ="titre";
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ConsultationAnnoncesServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	private static final long   serialVersionUID = 1L;
+	public  static final String ATT_ANNONCES     = "mesAnnonces";
+	public  static final String VUE              = "/mesAnnoncesReservations.jsp";
+	private static final String TITRE            = "titre";
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ProfilGestionImpl profilDAO = new ProfilGestionImpl();
-		int idProfil = Integer.parseInt(request.getParameter("id"));
-		Conducteur c = new Conducteur(profilDAO.find(idProfil));
-		FacadeConducteur facade = new FacadeConducteur(c);		
-		List<Trajet> mesAnnonces = facade.getAnnonces();
-		String titre = "Mes annonces";
-		
-		request.setAttribute( ATT_ANNONCES,mesAnnonces);
-		request.setAttribute(TITRE, titre);
-        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+	public ConsultationAnnoncesServlet() {
+		super();
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		ProfilGestionImpl profilDAO   = new ProfilGestionImpl();
+		int               idProfil    = Integer.parseInt(request.getParameter("id"));
+
+		//On recupere le conducteur
+		Conducteur        c           = new Conducteur(profilDAO.find(idProfil));
+
+		//On utilise la facade conducteur pour recuperer ses annonces
+		FacadeConducteur  facade      = new FacadeConducteur(c);
+		List<Trajet>      mesAnnonces = facade.getAnnonces();
+
+		//Titre html à envoyer dans la requete
+		String            titre       = "Mes annonces";
+
+		request.setAttribute(ATT_ANNONCES, mesAnnonces);
+		request.setAttribute(TITRE, titre);
+		this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

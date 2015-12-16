@@ -1,3 +1,12 @@
+/*
+ * Classe pour 
+ * avoir un singleton et 
+ * donc une seule instance 
+ * de la connexion avec la DB.
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package connexion;
 
 import java.sql.Connection;
@@ -7,8 +16,7 @@ import java.sql.SQLException;
 public class SingletonConnection {
 
 	private static Connection connection;
-	private static String pathDB="/Users/jeremux/Dropbox/Etudes/2015-2016/siad/eclipse/COVOITURAGE/WebContent/WEB-INF/db/";
-	private static String nomDB="covoiturage.db";
+	private static String pathDB = "/Users/jeremux/Dropbox/Etudes/2015-2016/siad/eclipse/COVOITURAGE/WebContent/WEB-INF/db/covoiturage.db";
 
 	static {
 		/**
@@ -27,7 +35,7 @@ public class SingletonConnection {
 		 * Connexion avec la base
 		 */
 		try {
-			connection = DriverManager.getConnection("jdbc:sqlite:"+SingletonConnection.pathDB+nomDB);
+			connection = DriverManager.getConnection("jdbc:sqlite:" + SingletonConnection.pathDB);
 			System.out.println("Connexion operationnelle");
 		} catch (SQLException e) {
 			e.printStackTrace();

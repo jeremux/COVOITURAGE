@@ -1,3 +1,10 @@
+/*
+ * Classe pour l'inscription
+ * d'un nouvel utilisateur
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package controller;
 
 import java.io.IOException;
@@ -16,14 +23,14 @@ import web.InscriptionForm;
  */
 @WebServlet(name = "inscription", urlPatterns = { "/inscription" })
 public class InscriptionServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-      
-	public static final String ATT_USER = "utilisateur";
-    public static final String ATT_FORM = "form";
-    public static final String VUE = "/inscription.jsp";
-    public static final String VUE_POST_INSCRIPTION ="/postInscription.jsp";
-    public static final String ATT_SESSION_USER = "sessionUtilisateur";
-    
+	private static final long   serialVersionUID     = 1L;
+
+	public  static final String ATT_USER             = "utilisateur";
+    public  static final String ATT_FORM             = "form";
+    public  static final String VUE                  = "/inscription.jsp";
+    public  static final String VUE_POST_INSCRIPTION = "/postInscription.jsp";
+    public  static final String ATT_SESSION_USER     = "sessionUtilisateur";
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -45,8 +52,8 @@ public class InscriptionServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		InscriptionForm form = new InscriptionForm();
-		Profil utilisateur = form.inscrireUtilisateur(request);
+		InscriptionForm form        = new InscriptionForm();
+		Profil          utilisateur = form.inscrireUtilisateur(request);
 		
 		
 		

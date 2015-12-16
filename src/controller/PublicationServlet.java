@@ -1,3 +1,9 @@
+/*
+ * Classe pour publier un nouveau trajet
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package controller;
 
 import java.io.IOException;
@@ -20,15 +26,13 @@ import web.AjouterTrajetForm;
  */
 @WebServlet(name = "publication", urlPatterns = { "/publication" })
 public class PublicationServlet extends HttpServlet {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	public static final String ATT_VILLE = "lesVilles";
-	public static final String ATT_TRAJET = "lesTrajets";
-    public static final String ATT_FORM = "form";
-    public static final String VUE = "/ajouterTrajet.jsp";
-    public static final String VUE_POST = "/accueil";   
+
+	private static final long   serialVersionUID = 1L;
+	public  static final String ATT_VILLE        = "lesVilles";
+	public  static final String ATT_TRAJET       = "lesTrajets";
+    public  static final String ATT_FORM         = "form";
+    public  static final String VUE              = "/ajouterTrajet.jsp";
+    public  static final String VUE_POST         = "/accueil";  
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -57,6 +61,7 @@ public class PublicationServlet extends HttpServlet {
 	
 		
 		AjouterTrajetForm form = new AjouterTrajetForm();
+		//on ajoute le nouveau trajet
 		Trajet t = form.ajouterTrajet(request);
 		
 		request.setAttribute( ATT_VILLE, lesVilles);

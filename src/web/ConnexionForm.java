@@ -1,3 +1,9 @@
+/*
+ * Classe pour traiter le formulaire de connexion
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package web;
 
 import java.util.HashMap;

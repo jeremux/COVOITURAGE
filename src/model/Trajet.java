@@ -1,3 +1,9 @@
+/*
+ * Classe pour representer un trajet
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package model;
 
 public class Trajet implements Comparable<Trajet>{

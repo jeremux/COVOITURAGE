@@ -1,3 +1,9 @@
+/*
+ * Classe pour lister l'ensemble des trajets
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package controller;
 
 import java.io.IOException;
@@ -17,16 +23,15 @@ import model.Trajet;
  */
 @WebServlet(name = "listTrajet", urlPatterns = { "/listTrajet" })
 public class ListeTrajetServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	public static final String ATT_TRAJET = "lesTrajets";
-	public static final String VUE = "/listTrajet.jsp";
+	private static final long   serialVersionUID = 1L;
+	public  static final String ATT_TRAJET       = "lesTrajets";
+	public  static final String VUE              = "/listTrajet.jsp";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public ListeTrajetServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -34,13 +39,9 @@ public class ListeTrajetServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		FacadeUtilisateur f = new FacadeUtilisateur();
-		List<Trajet> lesTrajets = f.getLesTrajet();
+		FacadeUtilisateur f          = new FacadeUtilisateur();
+		List<Trajet>      lesTrajets = f.getLesTrajet();
 		//lesTrajets = form.rechercheTrajet(request);
-
-		for(Trajet t:lesTrajets)
-			System.out.println(t.toString());
-			
 		
         request.setAttribute( ATT_TRAJET, lesTrajets);
 		

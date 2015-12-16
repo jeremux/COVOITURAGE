@@ -1,3 +1,9 @@
+/*
+ * Classe pour traiter le formulaire d'edition de profil
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package web;
 
 import java.util.HashMap;
@@ -70,7 +76,6 @@ public class EditionProfilForm {
         	v = villeDAO.create(v);
         }
                
-       System.out.println("Email lu ="+email);
      
         try {
             validationEmail(email,oldProfil.getEmail());

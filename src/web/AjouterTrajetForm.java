@@ -1,3 +1,9 @@
+/*
+ * Classe pour traiter le formulaire d'ajout de trajet
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package web;
 
 
@@ -38,19 +44,14 @@ public class AjouterTrajetForm {
 
     public Trajet ajouterTrajet( HttpServletRequest request ) {
         /* Récupération des champs du formulaire */
-        String cpVilleDepart = getValeurChamp( request, CHAMP_DEPART );
+        String cpVilleDepart  = getValeurChamp( request, CHAMP_DEPART );
         String cpVilleArrivee = getValeurChamp( request, CHAMP_ARRIVEE );
-        String date = getValeurChamp(request, CHAMP_DATE);
-        String heure = getValeurChamp(request, CHAMP_HEURE);
-        String places = getValeurChamp(request, CHAMP_PLACES);
-        String prix = getValeurChamp(request, CHAMP_PRIX);        
-        Trajet trajet = new Trajet();
-        System.out.println("cpVilledepart "+cpVilleDepart);
-        System.out.println("cpVilleArriveet "+cpVilleArrivee);
-        System.out.println("date "+date);
-        System.out.println("heure"+heure);
-        System.out.println("places" +places);
-        System.out.println("prix "+prix);
+        String date           = getValeurChamp(request, CHAMP_DATE);
+        String heure          = getValeurChamp(request, CHAMP_HEURE);
+        String places         = getValeurChamp(request, CHAMP_PLACES);
+        String prix           = getValeurChamp(request, CHAMP_PRIX);
+        Trajet trajet         = new Trajet();
+
        
                        
         /* Validation */

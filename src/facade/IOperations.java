@@ -1,3 +1,9 @@
+/*
+ * Interface des operations de bases
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package facade;
 
 import java.util.List;

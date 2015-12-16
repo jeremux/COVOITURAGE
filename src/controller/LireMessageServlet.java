@@ -1,3 +1,9 @@
+/*
+ * Classe pour lire les messages recus
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package controller;
 
 import java.io.IOException;
@@ -15,9 +21,9 @@ import model.Message;
  */
 @WebServlet(name = "lireMessage", urlPatterns = { "/lireMessage" })
 public class LireMessageServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	public static final String ATT_MSG = "message";
-	public static final String VUE = "/ouvrirMessage.jsp";
+	private static final long   serialVersionUID = 1L;
+	public  static final String ATT_MSG          = "message";
+	public  static final String VUE              = "/ouvrirMessage.jsp";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -31,9 +37,9 @@ public class LireMessageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int idMessage = Integer.parseInt(request.getParameter("id"));
+		int                idMessage  = Integer.parseInt(request.getParameter("id"));
 		MessageGestionImpl messageDAO = new MessageGestionImpl();
-		Message message = messageDAO.find(idMessage);
+		Message            message    = messageDAO.find(idMessage);
 		
 		request.setAttribute(ATT_MSG, message);
 		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
@@ -43,7 +49,6 @@ public class LireMessageServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

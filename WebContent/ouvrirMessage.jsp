@@ -2,19 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:if test="${empty sessionScope.sessionUtilisateur}">
+	<jsp:forward page="/connexion"/>
+</c:if>
 
 <!DOCTYPE html> 
 <html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Station Shop - Checkout Page</title>
+<title>Détail message</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<!-- templatemo 352 station shop -->
-<!-- 
-Station Shop Template 
-http://www.templatemo.com/preview/templatemo_352_station_shop 
--->
+
 <link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
 <link href="css/erreur.css" rel='stylesheet' type='text/css'/>
 <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
@@ -46,11 +45,11 @@ http://www.templatemo.com/preview/templatemo_352_station_shop
     <c:if test="${message.getTrajet().getId()!=-1 }">
     <c:if test="${message.getExpediteur().getId()!=sessionScope.sessionUtilisateur.id}">
                 <div id="contact_form">
-                   <form method="post" name="contact" action="envoyerMessage?idConducteur=${message.getExpediteur().getId()}&idTrajet=${message.getTrajet().getId()}&idMessage=${message.getId()}">
+                   <form method="post" name="contact" action="envoyerMessage?idConducteur=${message.getExpediteur().getId()}&amp;idTrajet=${message.getTrajet().getId()}&amp;idMessage=${message.getId()}">
                         
 						<div class="cleaner h10"></div>
         
-                        <label for="text">Message:</label> <textarea id="text" name="contenu" rows="0" cols="0" class="required"></textarea>
+                        <label for="text">Message:</label> <textarea id="text" name="contenu" rows="1" cols="1" class="required"></textarea>
                         <div class="cleaner h10"></div>
                         <span class="erreur">${erreur}</span>
                         <input type="submit" value="Répondre" id="submit" name="submit" class="submit_btn float_l" />

@@ -1,3 +1,9 @@
+/*
+ * Classe pour représenter un profil
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package model;
 
 import java.io.Serializable;

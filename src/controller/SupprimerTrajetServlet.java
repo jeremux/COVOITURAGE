@@ -1,3 +1,9 @@
+/*
+ * Classe supprimer un trajet existant
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package controller;
 
 import java.io.IOException;
@@ -57,6 +63,7 @@ public class SupprimerTrajetServlet extends HttpServlet {
 		Trajet t = trajetDAO.find(idTrajet);
 		List<Profil> voyageurs = voyageursDAO.findByTrajet(t);
 		
+		//on envoie un message aux personnes inscrit au trajets
 		Message m = new Message();
 		String contenu = "Annulation du voyage "+t.getDepart().getNom()+"==>"+t.getDestination().getNom()+" prévu le "+t.getDate2()+"\n";
 		String objet = "Annulation";

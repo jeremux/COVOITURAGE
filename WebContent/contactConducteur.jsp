@@ -34,7 +34,7 @@
     
     <h1>Demande d'informations</h1>
                 <div id="contact_form">
-                   <form method="post" name="contact" action="envoyerMessage?idConducteur=<%= request.getParameter("idConducteur") %>&idTrajet=<%= request.getParameter("idTrajet")%>">
+                   <form method="post" name="contact" action="envoyerMessage?idConducteur=<%= request.getParameter("idConducteur") %>&amp;idTrajet=<%= request.getParameter("idTrajet")%>">
                         
 						<label for="subject">Objet:</label> <input type="text" name="objet" id="subject" class="input_field" />
 

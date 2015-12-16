@@ -1,3 +1,9 @@
+/*
+ * Classe pour envoyer un message 
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package controller;
 
 import java.io.IOException;
@@ -21,18 +27,17 @@ import web.EnvoyerMessageForm;
  */
 @WebServlet(name = "envoyerMessage", urlPatterns = { "/envoyerMessage" })
 public class EnvoyerMessageServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long   serialVersionUID = 1L;
 
-    public static final String ATT_FORM = "form";
-    public static final String VUE = "/contactConducteur.jsp";
-    public static final String VUE_POST = "/accueil";
+    public  static final String ATT_FORM         = "form";
+    public  static final String VUE              = "/contactConducteur.jsp";
+    public  static final String VUE_POST         = "/accueil";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public EnvoyerMessageServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -46,11 +51,13 @@ public class EnvoyerMessageServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//gestion du formulaire d'envoie
 		EnvoyerMessageForm form = new EnvoyerMessageForm();
-		Message m = form.ajouterMessage(request);
+		Message            m    = form.ajouterMessage(request);
 		
 		request.setAttribute( ATT_FORM, form );
         
+		
         if(m.getId()!=-1)
         {
         	this.getServletContext().getRequestDispatcher( VUE_POST ).forward( request, response );

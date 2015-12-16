@@ -1,6 +1,11 @@
+/*
+ * Classe pour traiter le formulaire de recherche
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package web;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,9 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import facade.FacadeUtilisateur;
-import metier.ProfilGestionImpl;
 import metier.VilleGestionImpl;
-import model.Profil;
 import model.Trajet;
 import model.Ville;
 
@@ -38,13 +41,6 @@ public class RechercheTrajetForm {
         FacadeUtilisateur facade =  new FacadeUtilisateur();
         VilleGestionImpl villeDAO = new VilleGestionImpl();
         
-
-        /* Initialisation du résultat global de la validation. */
-        if ( erreurs.isEmpty() ) {
-            
-        } else {
-            
-        }
         
         Ville vDep = villeDAO.findByCP(villeDepart);
         Ville vArr = villeDAO.findByCP(villeArrivee);
@@ -53,12 +49,6 @@ public class RechercheTrajetForm {
 
 
 
-    /*
-     * Ajoute un message correspondant au champ spécifié à la map des erreurs.
-     */
-    private void setErreur( String champ, String message ) {
-        erreurs.put( champ, message );
-    }
 
     /*
      * Méthode utilitaire qui retourne null si un champ est vide, et son contenu

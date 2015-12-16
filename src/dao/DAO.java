@@ -1,3 +1,10 @@
+/*
+ * Classe abstraite générique 
+ * pour intéragir avec les tables
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package dao;
 
 import java.sql.Connection;

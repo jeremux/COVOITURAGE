@@ -1,3 +1,10 @@
+/*
+ * Classe pour traiter le formulaire d'envoie de 
+ * message
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package web;
 
 
@@ -28,12 +35,11 @@ public class EnvoyerMessageForm {
         ProfilGestionImpl profilDAO = new ProfilGestionImpl();
         TrajetGestionImpl trajetDAO = new TrajetGestionImpl();
         
-        System.out.println("idConducteur ="+request.getParameter("idConducteur"));
-        System.out.println("idTrajet ="+request.getParameter("idTrajet"));
         int idDestinataire = Integer.parseInt(request.getParameter("idConducteur"));
         int idTrajet = Integer.parseInt(request.getParameter("idTrajet"));
         Profil p = (Profil) request.getSession().getAttribute("sessionUtilisateur");
         
+        // si objet non spécifié on recupère l'ancien objet
         if(objet==null)
         	objet = messageDAO.find(Integer.parseInt(request.getParameter("idMessage"))).getObjet();
         

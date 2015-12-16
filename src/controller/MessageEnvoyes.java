@@ -1,3 +1,9 @@
+/*
+ * Classe pour afficher les messages envoyes
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package controller;
 
 import java.io.IOException;
@@ -17,28 +23,23 @@ import model.Message;
  */
 @WebServlet(name = "messageEnvoyes", urlPatterns = { "/messageEnvoyes" })
 public class MessageEnvoyes extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	public static final String ATT_MSG = "messagesEnvoyes";
-	public static final String VUE = "/messageEnvoyes.jsp";   
+	private static final long   serialVersionUID = 1L;
+	public  static final String ATT_MSG          = "messagesEnvoyes";
+	public  static final String VUE              = "/messageEnvoyes.jsp";   
     /**
      * @see HttpServlet#HttpServlet()
      */
     public MessageEnvoyes() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		MessageGestionImpl messageDAO = new MessageGestionImpl();
-		int idProfil = Integer.parseInt(request.getParameter("id"));
-		List<Message> messagesEnvoyes = messageDAO.findEnvoyes(idProfil);
-		
-		System.out.println("=============================================================");
-		for(Message m: messagesEnvoyes)
-			System.out.println(m.toString());
+		MessageGestionImpl messageDAO      = new MessageGestionImpl();
+		int                idProfil        = Integer.parseInt(request.getParameter("id"));
+		List<Message>      messagesEnvoyes = messageDAO.findEnvoyes(idProfil);
 	
 		request.setAttribute( ATT_MSG,messagesEnvoyes);
 		
@@ -49,7 +50,6 @@ public class MessageEnvoyes extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -1,3 +1,9 @@
+/*
+ * Interface des operations d'administration
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package facade;
 
 import model.Profil;

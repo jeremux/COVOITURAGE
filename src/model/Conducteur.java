@@ -1,7 +1,16 @@
+/*
+ * Classe pour répresenter un conducteur
+ *
+ * @author Jeremy FONTAINE
+ * @since 1.0
+ */
 package model;
 
 public class Conducteur extends Profil {
 
+	/**
+	 * Instantiates a new conducteur.
+	 */
 	public Conducteur() {
 		super();
 		// TODO Auto-generated constructor stub

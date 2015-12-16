@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Détail du trajet</title>
 <link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
 <link rel="stylesheet" type="text/css" href="css/pref.css" />
@@ -77,7 +77,7 @@
                     </tr>
                     <tr>
                         <td style="height:30px">Demandez des précisions au conducteur:</td>
-                        <td><a href="envoyerMessage?idTrajet=${trajet.getId()}&idConducteur=${trajet.conducteur.getId()}"><img alt="email_ico" src="images/email.png"></a></td>
+                        <td><a href="envoyerMessage?idTrajet=${trajet.getId()}&amp;idConducteur=${trajet.conducteur.getId()}"><img alt="email_ico" src="images/email.png"></a></td>
                     </tr>
                    
             </table>
@@ -122,7 +122,7 @@
             	<a href="reserverTrajet?idTrajet=${trajet.getId()}&amp;idProfil=${sessionScope.sessionUtilisateur.id}" class="btn"> Reserver</a>
             </c:if>
             <c:if test="${!facadeAdmin.isPaye(trajet,sessionScope.sessionUtilisateur)}">
-            	<a href="payerTrajet?idTrajet=${trajet.getId()}&idProfil=${sessionScope.sessionUtilisateur.id}" class="btn">Payer</a>
+            	<a href="payerTrajet?idTrajet=${trajet.getId()}&amp;idProfil=${sessionScope.sessionUtilisateur.id}" class="btn">Payer</a>
             </c:if>
             
             <c:if test="${facadeAdmin.isPaye(trajet,sessionScope.sessionUtilisateur)}">
@@ -131,7 +131,7 @@
             </c:if>
             </c:if>
             <c:if test="${trajet.conducteur.getId()==sessionScope.sessionUtilisateur.id}">
-            	<a href="supprimerTrajet?idTrajet=${trajet.getId()}&idConducteur=${sessionScope.sessionUtilisateur.id}"><button class="delete" style="cursor:pointer">Supprimer</button></a>
+            	<a href="supprimerTrajet?idTrajet=${trajet.getId()}&amp;idConducteur=${sessionScope.sessionUtilisateur.id}" class="btn">Supprimer</a>
             </c:if>
             </div>
         <div class="cleaner"></div>
