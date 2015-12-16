@@ -75,12 +75,18 @@ public class Message {
 	public String toString()
 	{
 		String res = "***************************************";
+		res += "id = "+this.getId();
 		res += "\nDestinataire = "+this.getDestinataire().getNom();
 		res += "\nExpediteur = "+this.getExpediteur().getNom();
 		res += "\nObjet = "+this.getObjet();
 		res += "\nContenu ="+this.getContenu();
-		res += "\nDepart ="+this.getTrajet().getDepart().getNom();
-		res += "\nArrivee ="+this.getTrajet().getDestination().getNom();
+		
+		if(this.getTrajet().getId()!=-1)
+		{
+			System.out.println("trajet = "+this.getTrajet().getId());
+			res += "\nDepart ="+this.getTrajet().getDepart().getNom();
+			res += "\nArrivee ="+this.getTrajet().getDestination().getNom();
+		}
 		
 		return res;
 	}

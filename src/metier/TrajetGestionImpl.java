@@ -90,13 +90,13 @@ public class TrajetGestionImpl extends DAO<Trajet> {
 		try {
 			PreparedStatement ps = this.connection.prepareStatement("update Trajet set "
 					+ "villeDepart=?,"
-					+ "villeArrivee= ?,"
-					+ "date= ?,"
-					+ "heure= ?,"
+					+ "villeArrivee=?,"
+					+ "date=?,"
+					+ "heure=?,"
 					+ "places=?,"
 					+ "prix=?,"
-					+ "idConducteur=?,"
-					+ "where idTrajet=?");
+					+ "idConducteur=?"
+					+ "where idTrajet=?;");
 	
 			ps.setInt(1,t.getDepart().getId());
 			ps.setInt(2,t.getDestination().getId());

@@ -122,5 +122,11 @@ public class Trajet implements Comparable<Trajet>{
 	public int compareTo(Trajet o) {
 		return Double.compare(this.prix, o.prix);
 	}
+
+	public void decrementePlace() {
+		if(places>=1)
+			places--;
+		
+	}
 	
 }

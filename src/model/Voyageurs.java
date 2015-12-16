@@ -4,17 +4,24 @@ public class Voyageurs {
 	
 	private Profil passager;
 	private Trajet trajet;
-	
+	private boolean paye;
+	private int flagExistence;
 	public Voyageurs() {
 		super();
-		// TODO Auto-generated constructor stub
+		setFlagExistence(-1);
 	}
 
-	public Voyageurs(Profil passager, Trajet trajet) {
+	
+
+	public Voyageurs(Profil passager, Trajet trajet, boolean paye) {
 		super();
 		this.passager = passager;
 		this.trajet = trajet;
+		this.paye = paye;
+		setFlagExistence(1);
 	}
+
+
 
 	public Profil getPassager() {
 		return passager;
@@ -31,7 +38,26 @@ public class Voyageurs {
 	public void setTrajet(Trajet trajet) {
 		this.trajet = trajet;
 	}
-	
+
+	public boolean isPaye() {
+		return paye;
+	}
+
+	public void setPaye(boolean paye) {
+		this.paye = paye;
+	}
+
+
+
+	public int getFlagExistence() {
+		return flagExistence;
+	}
+
+
+
+	public void setFlagExistence(int flagExistence) {
+		this.flagExistence = flagExistence;
+	}
 	
 	
 }

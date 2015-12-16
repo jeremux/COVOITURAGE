@@ -9,6 +9,7 @@ import java.util.Set;
 
 import dao.DAO;
 import model.Message;
+import model.Trajet;
 import util.RecupereID;
 
 public class MessageGestionImpl extends DAO<Message> {
@@ -155,6 +156,8 @@ public class MessageGestionImpl extends DAO<Message> {
 		Message m = new Message();
 		ProfilGestionImpl profilDao = new ProfilGestionImpl();
 		TrajetGestionImpl trajetDao = new TrajetGestionImpl();
+		Trajet t;
+		
 		try {
 			PreparedStatement ps = connection.prepareStatement("select * from Message where idExpediteur=?");
 			ps.setInt(1,idProfil);
@@ -167,12 +170,13 @@ public class MessageGestionImpl extends DAO<Message> {
 				if(idp==idProfil)
 				{
 					m = new Message();
-					m.setId(idp);
+					m.setId(rs.getInt("idMessage"));
 					m.setContenu(rs.getString("contenu"));
 					m.setDestinataire(profilDao.find(rs.getInt("idDestinataire")));
 					m.setExpediteur(profilDao.find(rs.getInt("idExpediteur")));
 					m.setObjet(rs.getString("objet"));
-					m.setTrajet(trajetDao.find(rs.getInt("idTrajet")));
+					t = trajetDao.find(rs.getInt("idTrajet")); 
+					m.setTrajet(t);
 					
 					res.add(m);
 				}
@@ -181,8 +185,25 @@ public class MessageGestionImpl extends DAO<Message> {
 			System.err.println("Erreur getPreference table Preference");
 			e.printStackTrace();
 		}
-	
+		
+		for(Message m1: res)
+		{
+			System.out.println(m1.toString());
+		}
 		return res;
+	}
+
+	public void delete(Trajet t) {
+		try {
+			PreparedStatement ps = this.connection.prepareStatement("delete from Message where idTrajet=?");
+			ps.setInt(1,t.getId());
+			
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur prepareStatement table Message");
+			e.printStackTrace();
+		}
 	}
 
 }

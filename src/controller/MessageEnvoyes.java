@@ -36,6 +36,9 @@ public class MessageEnvoyes extends HttpServlet {
 		int idProfil = Integer.parseInt(request.getParameter("id"));
 		List<Message> messagesEnvoyes = messageDAO.findEnvoyes(idProfil);
 		
+		System.out.println("=============================================================");
+		for(Message m: messagesEnvoyes)
+			System.out.println(m.toString());
 	
 		request.setAttribute( ATT_MSG,messagesEnvoyes);
 		

@@ -34,6 +34,9 @@ public class EnvoyerMessageForm {
         int idTrajet = Integer.parseInt(request.getParameter("idTrajet"));
         Profil p = (Profil) request.getSession().getAttribute("sessionUtilisateur");
         
+        if(objet==null)
+        	objet = messageDAO.find(Integer.parseInt(request.getParameter("idMessage"))).getObjet();
+        
         m = new Message(contenu, objet, p,profilDAO.find(idDestinataire), trajetDAO.find(idTrajet));
         m = messageDAO.create(m);
        

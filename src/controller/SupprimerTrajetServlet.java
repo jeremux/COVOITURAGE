@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import facade.FacadeAdmin;
 import facade.FacadeConducteur;
 import facade.FacadeUtilisateur;
 import metier.MessageGestionImpl;
@@ -48,8 +49,10 @@ public class SupprimerTrajetServlet extends HttpServlet {
 		VoyageursGestionImpl voyageursDAO = new VoyageursGestionImpl();
 		MessageGestionImpl messageDAO = new MessageGestionImpl();
 		
+		
 		Conducteur conducteur = new Conducteur(profilDAO.find(idConducteur));
 		FacadeConducteur c = new FacadeConducteur(conducteur);
+		FacadeAdmin admin = new FacadeAdmin();
 		
 		Trajet t = trajetDAO.find(idTrajet);
 		List<Profil> voyageurs = voyageursDAO.findByTrajet(t);
@@ -61,7 +64,8 @@ public class SupprimerTrajetServlet extends HttpServlet {
 		m.setContenu(contenu);
 		m.setObjet(objet);
 		m.setExpediteur(conducteur);
-		m.setTrajet(t);
+		//pas de trajet
+		m.setTrajet(new Trajet());
 		m.setSensTrajet(t.getDepart().getNom()+"->"+t.getDestination().getNom());
 		
 		for(Profil p: voyageurs)
@@ -71,6 +75,10 @@ public class SupprimerTrajetServlet extends HttpServlet {
 			messageDAO.create(m);
 		}
 		c.supprimerTrajet(t);
+		admin.supprimerMessage(t);
+		admin.supprimerVoyageurs(t);
+		
+		
 		
 		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 
