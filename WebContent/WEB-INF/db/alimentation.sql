@@ -37,12 +37,18 @@ INSERT INTO "Profil" VALUES(1,'claude27','pass','claude27@kol.uk','2015-11-12','
 INSERT INTO "Profil" VALUES(2,'sandrinette','pass','sandrinette@yop.ph','2013-02-26','1990-07-21','Paige','Sandrine',2,14);
 INSERT INTO "Profil" VALUES(3,'tony','pass','tony@er.gj','2015-11-23','1986-07-18','AARON','anthony',3,4);
 INSERT INTO "Profil" VALUES(4,'mel','pass','melimelo@jk.sd','2013-12-02','1976-05-22','MOREL','melanie',4,11);
+INSERT INTO "Profil" VALUES(5,'androu','pass','androu@jk.sd','2013-12-02','1956-11-19','ROBERTO','andre',6,9);
 
 /* table Trajet */
 
 INSERT INTO "Trajet" VALUES(1,2,3,'2015-12-22','10:20',4,7.5,1);
 INSERT INTO "Trajet" VALUES(2,3,4,'2015-12-28','7:30',3,15.5,3);
-INSERT INTO "Trajet" VALUES(3,6,10,'2015-12-19','14:00',1,10,1);
+INSERT INTO "Trajet" VALUES(3,7,10,'2015-12-19','14:00',1,10,4);
+INSERT INTO "Trajet" VALUES(4,6,8,'2016-01-03','20:00',1,3,2);
+INSERT INTO "Trajet" VALUES(5,9,2,'2015-12-19','10:00',2,45.5,2);
+INSERT INTO "Trajet" VALUES(6,5,8,'2015-12-27','13:00',3,12.25,1);
+INSERT INTO "Trajet" VALUES(7,3,10,'2015-12-29','12:00',4,20,1);
+INSERT INTO "Trajet" VALUES(8,4,5,'2016-02-19','23:00',1,10,2);
 
 /* table Message */
 
