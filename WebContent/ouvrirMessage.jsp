@@ -36,12 +36,17 @@ http://www.templatemo.com/preview/templatemo_352_station_shop
     <jsp:include page="sidebar.jsp"/>
         <div id="content" class="float_r">
     
-    <h2>${message.getObjet()}</h2>
-    <h4>De: ${message.getExpediteur().getNom()}</h4>
-    <h6>Trajet: ${message.getTrajet().getDepart() }-->${message.getTrajet().getDestination()}</h6>
+    <h5> ${message.getObjet()}</h5>
+    <h6>De: ${message.getExpediteur().getNom()}</h6>
+    <c:if test="${message.getTrajet().getId()!=-1 }">
+    <h6>Trajet: ${message.getTrajet().getDepart().getNom() }-->${message.getTrajet().getDestination().getNom()}</h6>
+    </c:if>
+    
     <p>${message.getContenu()}</p>
+    <c:if test="${message.getTrajet().getId()!=-1 }">
+    <c:if test="${message.getExpediteur().getId()!=sessionScope.sessionUtilisateur.id}">
                 <div id="contact_form">
-                   <form method="post" name="contact" action="envoyerMessage?idConducteur=<%= request.getParameter("idConducteur") %>&idTrajet=<%= request.getParameter("idTrajet")%>">
+                   <form method="post" name="contact" action="envoyerMessage?idConducteur=${message.getExpediteur().getId()}&idTrajet=${message.getTrajet().getId()}&idMessage=${message.getId()}">
                         
 						<div class="cleaner h10"></div>
         
@@ -54,6 +59,8 @@ http://www.templatemo.com/preview/templatemo_352_station_shop
             	</form>
             	
                 </div>
+                </c:if>
+                </c:if>
                 <div class="cleaner h20"></div> 
         <div class="cleaner h40"></div>
              

@@ -24,7 +24,7 @@
     <div id="templatemo_main">
    		<jsp:include page="sidebar.jsp"/>
         <div id="content" class="float_r">
-   			<h1>Boite de reception</h1>
+   			<h1>Boite d'envoi</h1>
         	<table style="width:680px">
                    	  	<tr bgcolor="#ddd">
                         	<th width="180" align="left">Destinataire</th> 
@@ -50,7 +50,8 @@
 								</c:if>	
 								</td>
 								<td><a href="lireMessage?id=${message.getId()}">lire</a></td>
-                            	<td><a href="supprimerMessage?idMessage=${message.getId()}&idProfil=${sessionScope.sessionUtilisateur.id}">Supprimer</a></td>
+								<td><a href="#">supprimer</a></td>
+<%--                             	<td><a href="supprimerMessage?idMessage=${message.getId()}&idProfil=${sessionScope.sessionUtilisateur.id}">Supprimer</a></td> --%>
 							</tr>	
 						</c:forEach>
                       	

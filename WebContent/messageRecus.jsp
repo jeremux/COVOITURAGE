@@ -49,7 +49,8 @@
 								</c:if>	
 								</td>
 								<td><a href="lireMessage?id=${message.getId()}">lire</a></td>
-                            	<td><a href="supprimerMessage?idMessage=${message.getId()}&idProfil=${sessionScope.sessionUtilisateur.id}">Supprimer</a></td>
+								<td><a href="#">supprimer</a></td>
+<%--                             	<td><a href="supprimerMessage?idMessage=${message.getId()}&idProfil=${sessionScope.sessionUtilisateur.id}">Supprimer</a></td> --%>
 							</tr>	
 						</c:forEach>
                       	
