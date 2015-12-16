@@ -7,14 +7,10 @@
 <html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Station Shop - Checkout Page</title>
+<title>Connexion</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<!-- templatemo 352 station shop -->
-<!-- 
-Station Shop Template 
-http://www.templatemo.com/preview/templatemo_352_station_shop 
--->
+
 <link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
 <link href="css/erreur.css" rel='stylesheet' type='text/css'/>
 <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />

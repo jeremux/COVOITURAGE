@@ -21,3 +21,30 @@ background: rgb(202, 60, 60);
 .delete:hover {
 	background: rgb(255, 0, 0);
 }
+
+.btn {
+  background: #f01111;
+  background-image: -webkit-linear-gradient(top, #f01111, #b8502b);
+  background-image: -moz-linear-gradient(top, #f01111, #b8502b);
+  background-image: -ms-linear-gradient(top, #f01111, #b8502b);
+  background-image: -o-linear-gradient(top, #f01111, #b8502b);
+  background-image: linear-gradient(to bottom, #f01111, #b8502b);
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0px;
+  font-family: Arial;
+  color: #000000;
+  font-size: 11px;
+  padding: 5px 5px 5px 5px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #fc3c3c;
+  background-image: -webkit-linear-gradient(top, #fc3c3c, #ff0505);
+  background-image: -moz-linear-gradient(top, #fc3c3c, #ff0505);
+  background-image: -ms-linear-gradient(top, #fc3c3c, #ff0505);
+  background-image: -o-linear-gradient(top, #fc3c3c, #ff0505);
+  background-image: linear-gradient(to bottom, #fc3c3c, #ff0505);
+  text-decoration: none;
+}

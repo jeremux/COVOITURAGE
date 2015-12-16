@@ -7,14 +7,10 @@
 <html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Station Shop - Checkout Page</title>
+<title>Contact</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<!-- templatemo 352 station shop -->
-<!-- 
-Station Shop Template 
-http://www.templatemo.com/preview/templatemo_352_station_shop 
--->
+
 <link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
 <link href="css/erreur.css" rel='stylesheet' type='text/css'/>
 <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
@@ -64,7 +60,7 @@ http://www.templatemo.com/preview/templatemo_352_station_shop
 
 						<div class="cleaner h10"></div>
         
-                        <label for="text">Message:</label> <textarea id="text" name="text" rows="0" cols="0" class="required"></textarea>
+                        <label for="text">Message:</label> <textarea id="text" name="text" rows="1" cols="1" class="required"></textarea>
                         <div class="cleaner h10"></div>
                         
                         <input type="submit" value="Envoyer" id="submit" name="submit" class="submit_btn float_l" />
@@ -87,7 +83,7 @@ Cité Scientifique, 59650 Villeneuve-d'Ascq<br />
         
         <div class="cleaner h40"></div>
              
-        <iframe width="680" height="340"  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2531.9133648029233!2d3.1412267226513317!3d50.61014735107693!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2d64d7432cc3b%3A0x975b789ee1f01e43!2sUniversit%C3%A9+de+Lille+1!5e0!3m2!1sfr!2sfr!4v1449438964943" width="600" height="450" style="border:0" ></iframe>
+        <iframe width="680" height="340"  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2531.9133648029233!2d3.1412267226513317!3d50.61014735107693!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2d64d7432cc3b%3A0x975b789ee1f01e43!2sUniversit%C3%A9+de+Lille+1!5e0!3m2!1sfr!2sfr!4v1449438964943" style="border:0" ></iframe>
     </div> <!-- END div float_r -->
      <div class="cleaner"></div>
     </div> <!-- END of templatemo_main -->

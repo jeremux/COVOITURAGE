@@ -7,14 +7,10 @@
 <html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Station Shop - Checkout Page</title>
+<title>Contact conducteur</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<!-- templatemo 352 station shop -->
-<!-- 
-Station Shop Template 
-http://www.templatemo.com/preview/templatemo_352_station_shop 
--->
+
 <link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
 <link href="css/erreur.css" rel='stylesheet' type='text/css'/>
 <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
@@ -44,7 +40,7 @@ http://www.templatemo.com/preview/templatemo_352_station_shop
 
 						<div class="cleaner h10"></div>
         
-                        <label for="text">Message:</label> <textarea id="text" name="contenu" rows="0" cols="0" class="required"></textarea>
+                        <label for="text">Message:</label> <textarea id="text" name="contenu" rows="1" cols="1" class="required"></textarea>
                         <div class="cleaner h10"></div>
                         <span class="erreur">${erreur}</span>
                         <input type="submit" value="Envoyer" id="submit" name="submit" class="submit_btn float_l" />

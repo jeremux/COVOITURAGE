@@ -9,6 +9,7 @@
 <link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
 <link rel="stylesheet" type="text/css" href="css/table.css" />
+<link href="css/erreur.css" rel='stylesheet' type='text/css'/>
 </head>
 <body>
 
@@ -33,6 +34,7 @@
                             <th width="360" align="left">Date</th>  
                         	<th width="50" align="right"> </th> 
                         	<th width="120" align="right"> </th> 
+                        	<th width="120" align="left">Détails</th>
                       	</tr>
 						<c:forEach items="${mesAnnonces}" var="trajet">
 						<tr>
@@ -43,6 +45,7 @@
 					
 								<td><a href="infoTrajet?id=${trajet.getId()}">Détails</a></td>
                             	<td><a href="supprimerTrajet?idTrajet=${trajet.getId()}&idConducteur=${sessionScope.sessionUtilisateur.id}">Supprimer</a></td>
+                            	<td><a href="infoTrajet?id=${trajet.getId()}">${trajet.getDepart().getNom()} -> ${trajet.getDestination().getNom()}</a></td>
 							</tr>	
 						</c:forEach>
 						<c:forEach items="${mesReservations}" var="trajet">
@@ -51,9 +54,14 @@
 								<td>${trajet.getDestination().getNom()}</td>
 								<td>${trajet.getDate2()}</td>
 					
-					
-								<td><a href="#">Annuler</a></td>
-                            	<td><a href="#">Payer</a></td>
+								<c:if test="${!facadeAdmin.isPaye(trajet,sessionScope.sessionUtilisateur)}">
+								<td><a href="annulerReservation?idPassager=${sessionScope.sessionUtilisateur.getId()}&idTrajet=${trajet.getId()}">Annuler</a></td>
+                            	<td><a href="payerTrajet?idProfil=${sessionScope.sessionUtilisateur.getId()}&idTrajet=${trajet.getId()}">Payer</a></td>
+                            	</c:if>
+                            	<c:if test="${facadeAdmin.isPaye(trajet,sessionScope.sessionUtilisateur)}">
+								<td colspan="2"><span class="success">Paiement effectué</span></td>
+                            	</c:if>
+                            	<td><a href="infoTrajet?id=${trajet.getId()}">${trajet.getDepart().getNom()} -> ${trajet.getDestination().getNom()}</a></td>
 							</tr>	
 						</c:forEach>
                       	

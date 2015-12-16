@@ -3,6 +3,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
+<c:if test="${empty sessionScope.sessionUtilisateur}">
+	<jsp:forward page="/connexion"/>
+</c:if>
+
+
 <!DOCTYPE html> 
 <html>
 <head>
@@ -11,6 +16,7 @@
 <link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
 <link rel="stylesheet" type="text/css" href="css/pref.css" />
+<link href="css/erreur.css" rel='stylesheet' type='text/css'/>
 </head>
 <body>
 <div id="templatemo_wrapper">
@@ -28,27 +34,27 @@
             
 				<table>
                     <tr>
-                        <td height="30" width="160">Départ:</td>
+                        <td style="height:30px;width:160px">Départ:</td>
                         <td>${trajet.depart.nom}</td>
                     </tr>
                     <tr>
-                        <td height="30">Arrivée:</td>
+                        <td style="height:30px">Arrivée:</td>
                         <td>${trajet.destination.nom}</td>
                     </tr>
                     <tr>
-                        <td height="30">Date:</td>
+                        <td style="height:30px">Date:</td>
                         <td>${trajet.date2}</td>
                     </tr>
                     <tr>
-                        <td height="30">Heure:</td>
+                        <td style="height:30px">Heure:</td>
                         <td>${trajet.heure}</td>
                     </tr>
                     <tr>
-                        <td height="30">Places restante:</td>
+                        <td style="height:30px">Places restante:</td>
                         <td>${trajet.places}</td>
                     </tr>
                     <tr>
-                        <td height="30">Prix:</td>
+                        <td style="height:30px">Prix:</td>
                         <td>${trajet.prix}</td>
                     </tr>
                    
@@ -61,16 +67,16 @@
             <h4>Conducteur</h4>
             <table>
             	<tr>
-                        <td height="30" width="160">Age:</td>
+                        <td style="height:30px;width:160px">Age:</td>
                         <td>${trajet.conducteur.getAge()}</td>
                 </tr>
          
                 <tr>
-                        <td height="30">Ancienneté:</td>
+                        <td style="height:30px">Ancienneté:</td>
                         <td>${trajet.conducteur.getAnciennete()}</td>
                     </tr>
                     <tr>
-                        <td height="30">Demandez des précisions au conducteur:</td>
+                        <td style="height:30px">Demandez des précisions au conducteur:</td>
                         <td><a href="envoyerMessage?idTrajet=${trajet.getId()}&idConducteur=${trajet.conducteur.getId()}"><img alt="email_ico" src="images/email.png"></a></td>
                     </tr>
                    
@@ -82,37 +88,48 @@
              <tr>
              <c:if test="${trajet.conducteur.preference.aimeAnimaux==true}">
             	
-                     <td height="30" width="160"><img alt="cat_img" src="images/cat-icon.png"></td>
+                     <td style="height:30px;width:160px"><img alt="cat_img" src="images/cat-icon.png"></td>
                 
                 </c:if>
          		<c:if test="${trajet.conducteur.preference.aimeDiscution}">
             	
-                     <td height="30" width="160">Aime bien discuter</td>
+                     <td style="height:30px;width:160px">Aime bien discuter</td>
                 
                 </c:if>
                 
                <c:if test="${trajet.conducteur.preference.aimeMusique}">
-                     <td height="30" width="160"><img alt="music_img" src="images/music-note.png"/></td>
+                     <td style="height:30px;width:160px"><img alt="music_img" src="images/music-note.png"/></td>
                 </c:if>
                 <c:if test="${!trajet.conducteur.preference.aimeMusique}">
-                     <td height="30" width="160"><img class="no-music" height="48px" width="48px" alt="no_music_img" src="images/no-music-note.png"/></td>
+                     <td style="height:30px;width:160px"><img class="no-music" height="48" width="48" alt="no_music_img" src="images/no-music-note.png"/></td>
                 </c:if>
                 
                 
                 <c:if test="${trajet.conducteur.preference.fumeur}">
-                     <td height="30" width="160"><img alt="smoke_img" src="images/smoke.png"/></td>
+                     <td style="height:30px;width:160px"><img alt="smoke_img" src="images/smoke.png"/></td>
                 </c:if>
                 <c:if test="${! trajet.conducteur.preference.fumeur}">
-                     <td height="30" width="160"><img alt="noSmoke_img" src="images/no-smoke.png"/></td>
+                     <td style="height:30px;width:160px"><img alt="noSmoke_img" src="images/no-smoke.png"/></td>
                 </c:if>
               
               
               </tr>     
             </table>
         	
-            <button type="submit">Reserver !</button>
+        	<c:if test="${voyageurs.getPassager().getId()!=-1 }">
+        	
+        	<c:if test="${!facadeAdmin.isReserve(trajet,sessionScope.sessionUtilisateur)}">
+            	<a href="reserverTrajet?idTrajet=${trajet.getId()}&amp;idProfil=${sessionScope.sessionUtilisateur.id}" class="btn"> Reserver</a>
+            </c:if>
+            <c:if test="${!facadeAdmin.isPaye(trajet,sessionScope.sessionUtilisateur)}">
+            	<a href="payerTrajet?idTrajet=${trajet.getId()}&idProfil=${sessionScope.sessionUtilisateur.id}" class="btn">Payer</a>
             </c:if>
             
+            <c:if test="${facadeAdmin.isPaye(trajet,sessionScope.sessionUtilisateur)}">
+            	<p class="erreur">Le voyage est payé !</p>
+            </c:if>
+            </c:if>
+            </c:if>
             <c:if test="${trajet.conducteur.getId()==sessionScope.sessionUtilisateur.id}">
             	<a href="supprimerTrajet?idTrajet=${trajet.getId()}&idConducteur=${sessionScope.sessionUtilisateur.id}"><button class="delete" style="cursor:pointer">Supprimer</button></a>
             </c:if>

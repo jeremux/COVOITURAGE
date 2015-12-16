@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Nouveau trajet</title>
 <link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
 <link rel="stylesheet" type="text/css" href="css/table.css" />
@@ -15,13 +15,9 @@
 
 <div id="templatemo_wrapper">
 	<jsp:include page="header.jsp"/>
-	<jsp:include page="menu.jsp"/>
-	
+	<jsp:include page="menu.jsp"/> 
     
-    
-    
-   
-    
+    <c:if test="${!empty sessionScope.sessionUtilisateur}">
     <div id="templatemo_main">
    		<jsp:include page="sidebar.jsp"/>
         <div id="content" class="float_r">
@@ -58,6 +54,7 @@
         </div> 
         <div class="cleaner"></div>
     </div> <!-- END of templatemo_main -->
+	</c:if>
     
     <jsp:include page="footer.jsp"/>
    
